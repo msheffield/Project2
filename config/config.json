@@ -1,8 +1,13 @@
 {
   "development": {
     "username": "root",
+<<<<<<< HEAD
     "password": "mkz5967831240",
     "database": "exampledb",
+=======
+    "password": "",
+    "database": "tutor_db",
+>>>>>>> 7a77fad8daabbc1b2b78f7faa09a07334071894f
     "host": "localhost",
     "dialect": "mysql"
   },
