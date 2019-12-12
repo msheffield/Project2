@@ -1,6 +1,13 @@
 var db = require("../models");
 
 module.exports = function(app) {
+  // Get all tutors
+  app.get("/api/tutors", function (req, res) {
+    db.Get.create().then(function(result) {
+      res.json(result);
+    });
+  });
+
   // Create a new account
   app.post("/api/account", function(req, res) {
     db.Post.create({
