@@ -1,13 +1,6 @@
 var db = require("../models");
 
 module.exports = function(app) {
-  // Get all examples
-  app.get("/api/examples", function(req, res) {
-    db.Example.findAll({}).then(function(result) {
-      res.json(result);
-    });
-  });
-
   // Create a new account
   app.post("/api/account", function(req, res) {
     db.Post.create({
@@ -28,13 +21,6 @@ module.exports = function(app) {
       description: req.body.description,
       grade: req.body.grade
     }).then(function(result) {
-      res.json(result);
-    });
-  });
-
-  // Delete an example by id
-  app.delete("/api/examples/:id", function(req, res) {
-    db.Example.destroy({ where: { id: req.params.id } }).then(function(result) {
       res.json(result);
     });
   });
