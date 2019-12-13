@@ -1,4 +1,4 @@
-let passport = requre('passport');
+let passport = require('passport');
 let LocalStrategy = require('passport-local').Strategy;
 let db = require('../models');
 

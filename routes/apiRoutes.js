@@ -1,4 +1,5 @@
-var db = require("../models");
+let db = require("../models");
+let passport = require('passport');
 
 module.exports = function(app) {
   // Get all examples
@@ -22,6 +23,8 @@ module.exports = function(app) {
     });
   });
 
+
+  // Login/signup routes
   app.post('/api/login', passport.authenticate('local'), function(req, res) {
     res.redirect('/')
   });
@@ -33,7 +36,7 @@ module.exports = function(app) {
     }).then(function() {
       res.redirect(307, '/api/login');
     }).catch(function(error) {
-      res.status(422).json(err.errors[0].message);
+      res.status(422).json(error.errors[0].message);
     });
   });
 
@@ -42,6 +45,15 @@ module.exports = function(app) {
     res.redirect('/login');
   });
 
-  
+  app.get('/api/user_data', function(req, res) {
+    if (!req.user) {
+      res.json({});
+    } else {
+      res.json({
+        email: req.user.email,
+        id: req.user.id
+      });
+    }
+  });
 
 };

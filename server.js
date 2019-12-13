@@ -23,7 +23,7 @@ app.set("view engine", "handlebars");
 
 
 // PassportJS
-let passprt = require('passport');
+let passport = require('passport');
 let session = require('express-session');
 
 app.use(session({
@@ -31,8 +31,9 @@ app.use(session({
   resave: true,
   saveUninitialized: true
 }));
-app.user(passport.initialize());
-app.user(passprt.session());
+app.use(passport.initialize());
+app.use(passport.session());
+require('./config/passport');
 
 
 // Routes

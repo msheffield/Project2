@@ -1,8 +1,9 @@
 var db = require("../models");
+let isAuthenticated = require('../config/middleware/isAuthenticated');
 
 module.exports = function(app) {
   // Load index page
-  app.get("/", function(req, res) {
+  app.get("/", isAuthenticated,  function(req, res) {
     res.render("index", {});
   });
 
@@ -35,6 +36,9 @@ module.exports = function(app) {
   });
 
   app.get("/login", function(req, res) {
+    if (req.user) {
+      req.redirect('/');
+    }
     res.render("login");
   });
 };
