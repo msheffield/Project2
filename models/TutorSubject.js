@@ -1,7 +1,7 @@
 module.exports = function(sequelize, DataTypes) {
-    var MapTutorSubject = sequelize.define("MapTutorSubject", {
+    var TutorSubject = sequelize.define("TutorSubject", {
       tutorId: DataTypes.INTEGER,
       subjectId: DataTypes.INTEGER
     });
-    return MapTutorSubject;
+    return TutorSubject;
   };

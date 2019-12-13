@@ -14,6 +14,12 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false
       }
     });
+    Tutor.belongsToMany(models.Subject, {
+      through: "TutorSubject",
+      as: "subjects",
+      foreignKey: "tutorId",
+      otherKey: "subjectId"
+    })
   }
   return Tutor;
 };
