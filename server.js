@@ -21,6 +21,20 @@ app.engine(
 );
 app.set("view engine", "handlebars");
 
+
+// PassportJS
+let passprt = require('passport');
+let session = require('express-session');
+
+app.use(session({
+  secret: 'tutors are awesome',
+  resave: true,
+  saveUninitialized: true
+}));
+app.user(passport.initialize());
+app.user(passprt.session());
+
+
 // Routes
 require("./routes/apiRoutes")(app);
 require("./routes/htmlRoutes")(app);
