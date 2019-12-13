@@ -1,13 +1,8 @@
 {
   "development": {
     "username": "root",
-<<<<<<< HEAD
     "password": "mkz5967831240",
-    "database": "exampledb",
-=======
-    "password": "",
     "database": "tutor_db",
->>>>>>> 7a77fad8daabbc1b2b78f7faa09a07334071894f
     "host": "localhost",
     "dialect": "mysql"
   },
@@ -21,6 +16,11 @@
   },
   "production": {
     "use_env_variable": "JAWSDB_URL",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "username": "cwmspqsvd9dumiei",
+    "password": "v0x9ml0akce2o5of$",
+    "database": "gggodlyk9s1w7xhw",
+    "host": "q68u8b2buodpme2n.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+    "operatorsAliases":false
   }
 }

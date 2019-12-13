@@ -3,10 +3,15 @@ var db = require("../models");
 module.exports = function(app) {
   // Load index page
   app.get("/", function(req, res) {
-    db.Example.findAll({}).then(function(dbExamples) {
-      res.render("index", {
-        msg: "Welcome!",
-        examples: dbExamples
+    res.render("index", {});
+  });
+
+  // Render Tutors search page
+
+  app.get("/tutors", function(req, res) {
+    db.Tutor.findAll({}).then(function(tutors) {
+      res.render("some table name", {
+        tutor: tutors
       });
     });
   });
