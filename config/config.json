@@ -1,11 +1,7 @@
 {
   "development": {
     "username": "root",
-<<<<<<< HEAD
     "password": "mkz5967831240",
-=======
-    "password": "mySQLPass1",
->>>>>>> b10f0389cca50ae675ecb2f34de66753355fe363
     "database": "tutor_db",
     "host": "localhost",
     "dialect": "mysql"

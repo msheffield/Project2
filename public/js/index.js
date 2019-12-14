@@ -101,18 +101,19 @@
 $('#signup-form').on('submit', function(event) {
   event.preventDefault();
   let userData = {
-    email: $('#email').val().trim(),
-    password: $('#password').val().trim(),
-    first_name: $('#first_name').val().trim(),
-    last_name: $('#last_name').val().trim()
+    email: $('#signup_email').val().trim(),
+    password: $('#signup_password').val().trim(),
+    first_name: $('#signup_first_name').val().trim(),
+    last_name: $('#signup_last_name').val().trim()
   }
+  console.log(userData)
   $.ajax('/api/signup', {
     type: 'POST',
     data: userData
-  }).then(function(error) {
-    if (error) {
-      throw error;
-    }
+  }).then(function(data) {
+    window.location.replace(data);
+  }).catch(function(error) {
+    console.log(error);
   });
 });
 
@@ -122,13 +123,14 @@ $('#login-form').on('submit', function(event) {
     email: $('#email').val().trim(),
     password: $('#password').val().trim()
   }
+  console.log(userData)
   $.ajax('/api/login', {
     type: 'POST',
     data: userData
-  }).then(function(error) {
-    if (error) {
-      throw error
-    }
+  }).then(function(data) {
+    window.location.replace(data);
+  }).catch(function(error) {
+    console.log(error);
   });
 });
 

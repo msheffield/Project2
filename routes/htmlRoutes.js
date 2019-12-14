@@ -2,6 +2,10 @@ var db = require("../models");
 let isAuthenticated = require('../config/middleware/isAuthenticated');
 
 module.exports = function(app) {
+  app.get('/', isAuthenticated, function(req, res) {
+    res.redirect('/index')
+  })
+
   // // Load index page
   // app.get("/", function(req, res) {
   //   db.Example.findAll({}).then(function(dbExamples) {
