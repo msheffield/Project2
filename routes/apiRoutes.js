@@ -31,8 +31,8 @@ module.exports = function(app) {
             db.TutorSubject.create({
               subjectId: dbSubject.id,
               tutorId: dbTutor.id
-            }).then(function(TutorSubject) {
-              return res.status(200).json(TutorSubject);
+            }).then(function(dbTutorSubject) {
+              return res.status(200).json(dbTutor);
             });
           }
         });
