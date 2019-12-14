@@ -44,15 +44,10 @@ module.exports = function(sequelize, DataTypes) {
         max: 5
       }
     },
-    photo: DataTypes.BLOB
+    photo: DataTypes.STRING
   });
   Tutor.associate = function(models){
-    Tutor.belongsTo(models.Account, {
-      foreignKey: {
-        allowNull: false
-      }
-    });
-<<<<<<< HEAD
+    Tutor.belongsTo(models.Account);
     Tutor.belongsToMany(models.Subject, {
       through: "TutorSubject",
       as: "subjects",
@@ -60,8 +55,5 @@ module.exports = function(sequelize, DataTypes) {
       otherKey: "subjectId"
     })
   }
-=======
-  };
->>>>>>> af568620619ed951286abfa750665338a3e63e3e
   return Tutor;
 };

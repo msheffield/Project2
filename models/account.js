@@ -17,6 +17,5 @@ module.exports = function(sequelize, DataTypes) {
     },
     reserved1: DataTypes.TEXT
   });
-
   return Account;
 };
