@@ -24,7 +24,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     location: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     skillLevel: {
       type: DataTypes.INTEGER,
@@ -34,7 +34,7 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     description: {
-      type: DataTypes.TEXT,
+      type: DataTypes.TEXT
     },
     grade: {
       type: DataTypes.INTEGER,
@@ -46,14 +46,14 @@ module.exports = function(sequelize, DataTypes) {
     },
     photo: DataTypes.STRING
   });
-  Tutor.associate = function(models){
+  Tutor.associate = function(models) {
     Tutor.belongsTo(models.Account);
     Tutor.belongsToMany(models.Subject, {
       through: "TutorSubject",
       as: "subjects",
       foreignKey: "tutorId",
       otherKey: "subjectId"
-    })
-  }
+    });
+  };
   return Tutor;
 };
