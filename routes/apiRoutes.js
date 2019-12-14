@@ -1,4 +1,5 @@
 var db = require("../models");
+var md5 = require("blueimp-md5");
 
 module.exports = function (app) {
   app.post("/api/tutors", function (req, res) {
@@ -38,5 +39,34 @@ module.exports = function (app) {
       });
     });
   });
+
+  //post account
+  app.post("/api/accounts", function(req, res){
+    db.Account.create(
+      {
+        username: req.body.username,
+        password: md5(req.body.password),
+        role: req.body.role,
+        email: req.body.email
+      }
+      ).then(function(dbAccount){
+        res.json({accountId: dbAccount.id});
+      })
+  });
+
+  //check if the username exists
+  app.get("/api/accounts/:username", function(req, res){
+    db.Account.findAll({
+      where:{
+        username: req.params.username
+      }
+    }).then(function(dbAccount){
+      if (dbAccount.length != 0){
+        res.json({isDuplicate: true});
+      } else {
+        res.json({isDuplicate: false});
+      }
+    })
+  })
 };
 
