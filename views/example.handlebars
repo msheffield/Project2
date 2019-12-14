@@ -1,4 +1,76 @@
 <div class="container">
+
+  <div class="jumbotron">
+    <h1 class="text-center"><span class="fas fa-book-reader"></span> Tutor Finder</h1>
+    <hr>
+    <h2 class="text-center">Find a perfect Tutor for your need!</h2>
+    <br>
+
+    <div class="text-center">
+
+
+    </div>
+    <div class="main">
+
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search for Tutor">
+        <div class="input-group-append">
+          <button class="btn btn-secondary" type="button">
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="container2">
+
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">First</th>
+          <th scope="col">Last</th>
+          <th scope="col">Phone</th>
+          <th scope="col">Location</th>
+          <th scope="col">Grade</th>
+          <th scope="col">Subject</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each tutors.}}
+        <tr>
+
+            <td>{{this.id}}</td>
+            <td>{{this.firstName}}</td>
+            <td>{{this.lastName}}</td>
+            <td>{{this.phone}}</td>
+            <td>{{this.location}}</td>
+            <td>{{this.grade}}</td>
+            <td>{{this.subject}}</td>
+
+
+        </tr>
+        {{/each}}
+    </tbody>
+      
+    </table>
+  </div>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+{{!-- <div class="container">
   <div class="row">
     <div class="col-8 offset-2">
       <div class="card mt-4">
@@ -16,4 +88,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> --}}
