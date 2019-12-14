@@ -1,8 +1,8 @@
 var db = require("../models");
 var md5 = require("blueimp-md5");
 
-module.exports = function (app) {
-  app.post("/api/tutors", function (req, res) {
+module.exports = function(app) {
+  app.post("/api/tutors", function(req, res) {
     console.log(req.body);
     //insert into tutor table
     db.Tutor.create({
@@ -15,23 +15,23 @@ module.exports = function (app) {
       grade: req.body.grade,
       photo: req.body.photo,
       AccountId: req.body.accountId
-    }).then(function (dbTutor) {
+    }).then(function(dbTutor) {
       //req.body.subjects is the array of the subjects
-      req.body.subjects.forEach(function (subjectItem) {
+      req.body.subjects.forEach(function(subjectItem) {
         //find subject id
         db.Subject.findOne({
-          where:{
+          where: {
             name: subjectItem
           }
-        }).then(function(dbSubject){
-          if (!dbSubject){
+        }).then(function(dbSubject) {
+          if (!dbSubject) {
             return res.status(400);
           } else {
             //insert into tutorsubject table
             db.TutorSubject.create({
               subjectId: dbSubject.id,
               tutorId: dbTutor.id
-            }).then(function (dbTutorSubject) {
+            }).then(function(dbTutorSubject) {
               return res.status(200).json(dbTutor);
             });
           }
@@ -41,32 +41,29 @@ module.exports = function (app) {
   });
 
   //post account
-  app.post("/api/accounts", function(req, res){
-    db.Account.create(
-      {
-        username: req.body.username,
-        password: md5(req.body.password),
-        role: req.body.role,
-        email: req.body.email
-      }
-      ).then(function(dbAccount){
-        res.json({accountId: dbAccount.id});
-      })
+  app.post("/api/accounts", function(req, res) {
+    db.Account.create({
+      username: req.body.username,
+      password: md5(req.body.password),
+      role: req.body.role,
+      email: req.body.email
+    }).then(function(dbAccount) {
+      res.json({ accountId: dbAccount.id });
+    });
   });
 
   //check if the username exists
-  app.get("/api/accounts/:username", function(req, res){
+  app.get("/api/accounts/:username", function(req, res) {
     db.Account.findAll({
-      where:{
+      where: {
         username: req.params.username
       }
-    }).then(function(dbAccount){
-      if (dbAccount.length != 0){
-        res.json({isDuplicate: true});
+    }).then(function(dbAccount) {
+      if (dbAccount.length !== 0) {
+        res.json({ isDuplicate: true });
       } else {
-        res.json({isDuplicate: false});
+        res.json({ isDuplicate: false });
       }
-    })
-  })
+    });
+  });
 };
-
