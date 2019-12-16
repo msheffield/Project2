@@ -6,6 +6,10 @@ module.exports = function (app) {
     res.redirect('/index');
   })
 
+  app.get("/index", function(req, res){
+    res.render("index.handlebars");
+  });
+
   app.get("/tutors", function (req, res) {
     console.log("hit here");
 
