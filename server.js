@@ -50,7 +50,7 @@ if (process.env.NODE_ENV === "test") {
 
 // Starting the server, syncing our models ------------------------------------/
 db.sequelize.sync({force: true}).then(function() {
-  //temp code to insert default subject values
+  //////To modify - temp code to insert default subject values
   db.Subject.bulkCreate([
     {name: "math"},
     {name: "reading"},
@@ -58,6 +58,7 @@ db.sequelize.sync({force: true}).then(function() {
   ]).then(function(){
     console.log(db.Subject.findAll());
   });
+  ////////////////////////////////////////////
   app.listen(PORT, function() {
     console.log(
       "==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.",

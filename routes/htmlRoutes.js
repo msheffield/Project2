@@ -7,6 +7,8 @@ module.exports = function (app) {
   })
 
   app.get("/tutors", function (req, res) {
+    console.log("hit here");
+
     db.Tutor.findAll({
       where: req.body.tutorQuery,
       include: [{
@@ -18,6 +20,8 @@ module.exports = function (app) {
       res.render("partials/searchtutor.handlebars");
     })
   });
+
+
   // // Load index page
   // app.get("/", function(req, res) {
   //   db.Example.findAll({}).then(function(dbExamples) {

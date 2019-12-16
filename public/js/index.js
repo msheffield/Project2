@@ -31,11 +31,11 @@ var API = {
 //   }
   getTutors: function(queryData){
     $.ajax({
-      url: "/",
+      url: "/tutors",
       type: "GET",
       data: queryData
     }).then(function(){
-      location.reload;
+      location.reload();
     });
   }
 };
@@ -63,6 +63,28 @@ var handleSearchSubmit = function(){
   }
   API.getTutors(queryData);
 };
+
+//refresh subject dropdown items
+var refreshSubjects = function(){
+  $.get("/api/subjects").then(function(data){
+    console.log(data);
+    for (var i = 0; i < data.length; i++){
+      var newDropdownItem = $("<a>").addClass("dropdown-item");
+      var newDiv = $("<div>").addClass("custom-control custom-checkbox");
+      var newInput = $("<input>").addClass("custom-control-input");
+      newInput.attr("type", "checkbox");
+      newInput.attr("id", data[i].name);
+      var newLabel = $("<label>").addClass("custom-control-label");
+      newLabel.attr("for", data[i].name);
+      newLabel.text(data[i].name);
+      newDiv.append(newInput);
+      newDiv.append(newLabel);
+      newDropdownItem.append(newDiv);
+      $("#subjectDropdown").append(newDropdownItem);
+    }
+  });
+};
+
 // var refreshExamples = function() {
 //   API.getExamples().then(function(data) {
 //     var $examples = data.map(function(example) {
@@ -130,6 +152,7 @@ var handleSearchSubmit = function(){
 $searchBtn.on("click", handleSearchSubmit);
 // $submitBtn.on("click", handleFormSubmit);
 // $exampleList.on("click", ".delete", handleDeleteBtnClick);
+refreshSubjects();
 
 $('#signup-form').on('submit', function(event) {
   event.preventDefault();

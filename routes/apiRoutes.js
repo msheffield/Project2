@@ -33,7 +33,6 @@ module.exports = function(app) {
               subjectId: dbSubject.id,
               tutorId: dbTutor.id
             }).then(function(dbTutorSubject) {
-              console.log("normal return");
               return res.status(200).end();
             });
           }
@@ -70,6 +69,13 @@ module.exports = function(app) {
     });
   });
 
+  //get all subjects
+  app.get("/api/subjects", function(req, res){
+    console.log("get all subjects");
+    db.Subject.findAll({}).then(function(data){
+      res.json(data);
+    });
+  });
 
   // Login/signup routes
   app.post('/api/login', passport.authenticate('local'), function(req, res) {
