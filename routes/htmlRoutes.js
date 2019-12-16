@@ -10,19 +10,45 @@ module.exports = function (app) {
     res.render("index.handlebars");
   });
 
-  app.get("/tutors", function (req, res) {
-    console.log("hit here");
+  app.post("/tutors", function (req, res) {
+    //use raw sql to join three tables
+    console.log(req.body);
+    var condition = "";
+    if (req.body.grade != 0){
+      condition += " t.grade = " + req.body.grade;
+    }
+    if (req.body.skillLevel != 0){
+      condition += " t.skillLevel = " + req.body.skillLevel;
+    }
+    if (req.body.location != 0){
+      condition += " t.location = " + req.body.location;
+    }
 
-    db.Tutor.findAll({
-      where: req.body.tutorQuery,
-      include: [{
-        model: db.Subject,
-        attributes: ["name"],
-        where: req.body.subjectQuery
-      }]
-    }).then(function (data) {
-      res.render("partials/searchtutor.handlebars");
-    })
+    var sql = "SELECT t.firstName, t.lastName, t.grade, t.location, t.skillLevel, t.phoneNumber, t.photo, t.description, s.name";
+    sql += " FROM Tutors AS t";
+    sql += " INNER JOIN TutorSubjects";
+    sql += " ON t.id = TutorSubjects.tutorId";
+    sql += " INNER JOIN Subjects AS s";
+    sql += " ON TutorSubjects.subjectId = s.id";
+    sql += (condition.trim() === "")? ";" : " WHERE " + condition + ";";
+
+    console.log(sql);
+    db.sequelize.query(sql).then(function(dbTutorData){
+      console.log(dbTutorData);
+      res.status(200).end();
+      //build return object array and render tutor-block.handlebars
+    });
+
+    // db.Tutor.findAll({
+    //   where: req.body.tutorQuery,
+    //   include: [{
+    //     model: db.Subject,
+    //     attributes: ["name"],
+    //     where: req.body.subjectQuery
+    //   }]
+    // }).then(function (data) {
+    //   res.render("partials/tutor-block.handlebars");
+    // })
   });
 
 

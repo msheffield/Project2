@@ -32,7 +32,7 @@ var API = {
   getTutors: function(queryData){
     $.ajax({
       url: "/tutors",
-      type: "GET",
+      type: "POST",
       data: queryData
     }).then(function(){
       location.reload();
@@ -43,24 +43,12 @@ var API = {
 // refreshExamples gets new examples from the db and repopulates the list
 var handleSearchSubmit = function(){
   event.preventDefault();
-  var tutorQuery;
-  var subjectQuery;
-  console.log("grade value = " + $("#gradeDropdown").val());
-  if ($("#gradeDropdown").val() != 0){
-    tutorQuery.grade = $("#gradeDropdown").val();
-  }
-  console.log("skill value = " + $("#skillsDropdown").val());
-  if ($("#skillsDropdown").val() != 0){
-    tutorQuery.skillLevel = $("#skillsDropdown").val();
-  }
-  console.log("location value = " + $("#locationDropdown").val());
-  if ($("#locationDropdown").val() != 0){
-    tutorQuery.location = $("#locationDropdown").val();
-  }
   var queryData = {
-    tutorQuery: tutorQuery,
-    subjectQuery: subjectQuery
-  }
+    grade: $("#gradeDropdown").val(),
+    skillLevel: $("#skillsDropdown").val(),
+    location: $("#locationDropdown").val()
+  };
+  console.log(JSON.stringify(queryData));
   API.getTutors(queryData);
 };
 
