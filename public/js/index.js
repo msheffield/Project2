@@ -3,34 +3,88 @@
 // var $exampleDescription = $("#example-description");
 // var $submitBtn = $("#submit");
 // var $exampleList = $("#example-list");
+var $searchBtn = $("#searchButton");
 
-// // The API object contains methods for each kind of request we'll make
-// var API = {
-//   saveExample: function(example) {
-//     return $.ajax({
-//       headers: {
-//         "Content-Type": "application/json"
-//       },
-//       type: "POST",
-//       url: "api/examples",
-//       data: JSON.stringify(example)
-//     });
-//   },
-//   getExamples: function() {
-//     return $.ajax({
-//       url: "api/examples",
-//       type: "GET"
-//     });
-//   },
-//   deleteExample: function(id) {
-//     return $.ajax({
-//       url: "api/examples/" + id,
-//       type: "DELETE"
-//     });
-//   }
-// };
+// The API object contains methods for each kind of request we'll make
+var API = {
+  //   saveExample: function(example) {
+  //     return $.ajax({
+  //       headers: {
+  //         "Content-Type": "application/json"
+  //       },
+  //       type: "POST",
+  //       url: "api/examples",
+  //       data: JSON.stringify(example)
+  //     });
+  //   },
+  //   getExamples: function() {
+  //     return $.ajax({
+  //       url: "api/examples",
+  //       type: "GET"
+  //     });
+  //   },
+  //   deleteExample: function(id) {
+  //     return $.ajax({
+  //       url: "api/examples/" + id,
+  //       type: "DELETE"
+  //     });
+  //   }
+  getTutors: function (queryData) {
+    $.ajax({
+      url: "/tutors",
+      type: "POST",
+      data: queryData
+    }).then(function () {
+      location.reload();
+    });
+  }
+};
 
-// // refreshExamples gets new examples from the db and repopulates the list
+// refreshExamples gets new examples from the db and repopulates the list
+var handleSearchSubmit = function () {
+  event.preventDefault();
+  var querySubjects = [];
+  var checkedElements = $(".custom-control-input:checked");
+  for(var i = 0; i < checkedElements.length; i++)
+  {
+    console.log(checkedElements[i]);
+    console.log($(checkedElements[i]).val());
+    querySubjects.push($(checkedElements[i]).val());
+  }
+  
+  var queryData = {
+    grade: $("#gradeDropdown").val(),
+    skillLevel: $("#skillsDropdown").val(),
+    location: $("#locationDropdown").val(),
+    subject: JSON.stringify(querySubjects)
+  };
+  console.log(queryData);
+  API.getTutors(queryData);
+};
+
+//refresh subject dropdown items
+var refreshSubjects = function () {
+  $("#subjectDropdown").empty();
+  $.get("/api/subjects").then(function (data) {
+    console.log(data);
+    for (var i = 0; i < data.length; i++) {
+      var newDropdownItem = $("<a>").addClass("dropdown-item");
+      var newDiv = $("<div>").addClass("custom-control custom-checkbox");
+      var newInput = $("<input>").addClass("custom-control-input");
+      newInput.attr("type", "checkbox");
+      newInput.attr("value", data[i].name);
+      newInput.attr("id", data[i].name);
+      var newLabel = $("<label>").addClass("custom-control-label");
+      newLabel.attr("for", data[i].name);
+      newLabel.text(data[i].name);
+      newDiv.append(newInput);
+      newDiv.append(newLabel);
+      newDropdownItem.append(newDiv);
+      $("#subjectDropdown").append(newDropdownItem);
+    }
+  });
+};
+
 // var refreshExamples = function() {
 //   API.getExamples().then(function(data) {
 //     var $examples = data.map(function(example) {
@@ -94,11 +148,13 @@
 //   });
 // };
 
-// // Add event listeners to the submit and delete buttons
+// Add event listeners to the submit and delete buttons
+$searchBtn.on("click", handleSearchSubmit);
 // $submitBtn.on("click", handleFormSubmit);
 // $exampleList.on("click", ".delete", handleDeleteBtnClick);
+refreshSubjects();
 
-$('#signup-form').on('submit', function(event) {
+$('#signup-form').on('submit', function (event) {
   event.preventDefault();
   let userData = {
     email: $('#signup_email').val().trim(),
@@ -110,14 +166,14 @@ $('#signup-form').on('submit', function(event) {
   $.ajax('/api/signup', {
     type: 'POST',
     data: userData
-  }).then(function(data) {
+  }).then(function (data) {
     window.location.replace(data);
-  }).catch(function(error) {
+  }).catch(function (error) {
     console.log(error);
   });
 });
 
-$('#login-form').on('submit', function(event) {
+$('#login-form').on('submit', function (event) {
   event.preventDefault();
   let userData = {
     email: $('#email').val().trim(),
@@ -127,9 +183,9 @@ $('#login-form').on('submit', function(event) {
   $.ajax('/api/login', {
     type: 'POST',
     data: userData
-  }).then(function(data) {
+  }).then(function (data) {
     window.location.replace(data);
-  }).catch(function(error) {
+  }).catch(function (error) {
     console.log(error);
   });
 });

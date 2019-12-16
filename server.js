@@ -46,12 +46,22 @@ var syncOptions = { force: false };
 // clearing the `testdb`
 if (process.env.NODE_ENV === "test") {
   syncOptions.force = true;
-  console.log("dev mode");
 }
 
 // Starting the server, syncing our models ------------------------------------/
-db.sequelize.sync(syncOptions).then(function() {
-  app.listen(PORT, function() {
+db.sequelize.sync(syncOptions).then(function () {
+  //////To modify - temp code to insert default subject values
+  if (syncOptions.force) {
+    db.Subject.bulkCreate([
+      { name: "math" },
+      { name: "reading" },
+      { name: "writing" }
+    ]).then(function () {
+      console.log(db.Subject.findAll());
+    });
+  }
+  ////////////////////////////////////////////
+  app.listen(PORT, function () {
     console.log(
       "==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.",
       PORT,
