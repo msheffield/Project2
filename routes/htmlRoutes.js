@@ -1,11 +1,23 @@
 var db = require("../models");
 let isAuthenticated = require('../config/middleware/isAuthenticated');
 
-module.exports = function(app) {
-  app.get('/', isAuthenticated, function(req, res) {
-    res.redirect('/index')
+module.exports = function (app) {
+  app.get('/', isAuthenticated, function (req, res) {
+    res.redirect('/index');
   })
 
+  app.get("/tutors", function (req, res) {
+    db.Tutor.findAll({
+      where: req.body.tutorQuery,
+      include: [{
+        model: db.Subject,
+        attributes: ["name"],
+        where: req.body.subjectQuery
+      }]
+    }).then(function (data) {
+      res.render("partials/searchtutor.handlebars");
+    })
+  });
   // // Load index page
   // app.get("/", function(req, res) {
   //   db.Example.findAll({}).then(function(dbExamples) {
@@ -31,11 +43,11 @@ module.exports = function(app) {
   // });
 
 
-  app.get("/signup", function(req, res) {
+  app.get("/signup", function (req, res) {
     res.render("signup");
   });
 
-  app.get("/login", function(req, res) {
+  app.get("/login", function (req, res) {
     if (req.user) {
       req.redirect('/');
     }
@@ -43,9 +55,9 @@ module.exports = function(app) {
   });
 
   // Render 404 page for any unmatched routes
-  app.get("*", function(req, res) {
+  app.get("*", function (req, res) {
     res.render("404");
   });
 
-  
+
 };

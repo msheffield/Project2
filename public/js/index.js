@@ -3,9 +3,10 @@
 // var $exampleDescription = $("#example-description");
 // var $submitBtn = $("#submit");
 // var $exampleList = $("#example-list");
+var $searchBtn = $("#searchButton");
 
-// // The API object contains methods for each kind of request we'll make
-// var API = {
+// The API object contains methods for each kind of request we'll make
+var API = {
 //   saveExample: function(example) {
 //     return $.ajax({
 //       headers: {
@@ -28,9 +29,40 @@
 //       type: "DELETE"
 //     });
 //   }
-// };
+  getTutors: function(queryData){
+    $.ajax({
+      url: "/",
+      type: "GET",
+      data: queryData
+    }).then(function(){
+      location.reload;
+    });
+  }
+};
 
-// // refreshExamples gets new examples from the db and repopulates the list
+// refreshExamples gets new examples from the db and repopulates the list
+var handleSearchSubmit = function(){
+  event.preventDefault();
+  var tutorQuery;
+  var subjectQuery;
+  console.log("grade value = " + $("#gradeDropdown").val());
+  if ($("#gradeDropdown").val() != 0){
+    tutorQuery.grade = $("#gradeDropdown").val();
+  }
+  console.log("skill value = " + $("#skillsDropdown").val());
+  if ($("#skillsDropdown").val() != 0){
+    tutorQuery.skillLevel = $("#skillsDropdown").val();
+  }
+  console.log("location value = " + $("#locationDropdown").val());
+  if ($("#locationDropdown").val() != 0){
+    tutorQuery.location = $("#locationDropdown").val();
+  }
+  var queryData = {
+    tutorQuery: tutorQuery,
+    subjectQuery: subjectQuery
+  }
+  API.getTutors(queryData);
+};
 // var refreshExamples = function() {
 //   API.getExamples().then(function(data) {
 //     var $examples = data.map(function(example) {
@@ -94,7 +126,8 @@
 //   });
 // };
 
-// // Add event listeners to the submit and delete buttons
+// Add event listeners to the submit and delete buttons
+$searchBtn.on("click", handleSearchSubmit);
 // $submitBtn.on("click", handleFormSubmit);
 // $exampleList.on("click", ".delete", handleDeleteBtnClick);
 
