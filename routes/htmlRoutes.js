@@ -15,13 +15,17 @@ module.exports = function (app) {
     console.log(req.body);
     var condition = "";
     if (req.body.grade != 0){
-      condition += " t.grade = " + req.body.grade;
+      condition += " t.grade = " + req.body.grade + " AND";
     }
     if (req.body.skillLevel != 0){
-      condition += " t.skillLevel = " + req.body.skillLevel;
+      condition += " t.skillLevel = " + req.body.skillLevel + " AND";
     }
     if (req.body.location != 0){
-      condition += " t.location = " + req.body.location;
+      condition += " t.location = " + req.body.location + " AND";
+    }
+    if (req.body["subject"].length != 0){
+      let subjects = req.body.subject.replace("[", "(").replace("]", ")");
+      condition += " s.name IN " + subjects;
     }
 
     var sql = "SELECT t.firstName, t.lastName, t.grade, t.location, t.skillLevel, t.phoneNumber, t.photo, t.description, s.name";
