@@ -49,17 +49,19 @@ if (process.env.NODE_ENV === "test") {
 }
 
 // Starting the server, syncing our models ------------------------------------/
-db.sequelize.sync({force: true}).then(function() {
+db.sequelize.sync(syncOptions).then(function () {
   //////To modify - temp code to insert default subject values
-  db.Subject.bulkCreate([
-    {name: "math"},
-    {name: "reading"},
-    {name: "writing"}
-  ]).then(function(){
-    console.log(db.Subject.findAll());
-  });
+  if (syncOptions.force) {
+    db.Subject.bulkCreate([
+      { name: "math" },
+      { name: "reading" },
+      { name: "writing" }
+    ]).then(function () {
+      console.log(db.Subject.findAll());
+    });
+  }
   ////////////////////////////////////////////
-  app.listen(PORT, function() {
+  app.listen(PORT, function () {
     console.log(
       "==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.",
       PORT,

@@ -23,12 +23,12 @@ module.exports = function (app) {
     if (req.body.location != 0){
       condition += " t.location = " + req.body.location + " AND";
     }
-    if (req.body["subject"].length != 0){
+    if (req.body.subject !== "[]"){
       let subjects = req.body.subject.replace("[", "(").replace("]", ")");
       condition += " s.name IN " + subjects;
     }
 
-    var sql = "SELECT t.firstName, t.lastName, t.grade, t.location, t.skillLevel, t.phoneNumber, t.photo, t.description, s.name";
+    var sql = "SELECT t.id, t.firstName, t.lastName, t.grade, t.location, t.skillLevel, t.phoneNumber, t.photo, t.description, s.name";
     sql += " FROM Tutors AS t";
     sql += " INNER JOIN TutorSubjects";
     sql += " ON t.id = TutorSubjects.tutorId";
@@ -37,22 +37,31 @@ module.exports = function (app) {
     sql += (condition.trim() === "")? ";" : " WHERE " + condition + ";";
 
     console.log(sql);
-    db.sequelize.query(sql).then(function(dbTutorData){
-      console.log(dbTutorData);
-      res.status(200).end();
-      //build return object array and render tutor-block.handlebars
-    });
 
-    // db.Tutor.findAll({
-    //   where: req.body.tutorQuery,
-    //   include: [{
-    //     model: db.Subject,
-    //     attributes: ["name"],
-    //     where: req.body.subjectQuery
-    //   }]
-    // }).then(function (data) {
-    //   res.render("partials/tutor-block.handlebars");
-    // })
+    db.sequelize.query(sql).then(function(dbTutorData){
+      //build return object array and render tutor-block.handlebars
+      var tutorsObj = {};
+      console.log(dbTutorData);
+      //aggregate data by tutor id
+    //   for (var i = 0; i < dbTutorData.length; i++){
+    //     var tutorId = dbTutorData[i].id;
+    //     if (!(tutorId in tutorsObj)){
+    //       tutorsObj[tutorId] = dbTutorData[i];
+    //       tutorsObj[tutorId].subjectName = [];
+    //     }
+    //     console.log("dbTutorData[" + i + "] = " + dbTutorData[i]);
+    //     tutorsObj[tutorId].subjectName.push(dbTutorData[i].name.toString());
+    //   }
+    //  var tutors = [];
+    // for (var prop in tutorsObj){
+    //   tutors.push(tutorsObj[prop]);
+    // }
+    // console.log(tutors);
+      res.render("index",{
+        tutors: dbTutorData
+      });
+      
+    });
   });
 
 

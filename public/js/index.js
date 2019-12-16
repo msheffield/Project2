@@ -64,6 +64,7 @@ var handleSearchSubmit = function () {
 
 //refresh subject dropdown items
 var refreshSubjects = function () {
+  $("#subjectDropdown").empty();
   $.get("/api/subjects").then(function (data) {
     console.log(data);
     for (var i = 0; i < data.length; i++) {
