@@ -64,6 +64,11 @@ module.exports = function (app) {
     });
   });
 
+  // Load create tutor page
+  app.get("/create-tutor", function (req, res) {
+    res.render("createTutor"); 
+  })
+
 
   // // Load index page
   // app.get("/", function(req, res) {
