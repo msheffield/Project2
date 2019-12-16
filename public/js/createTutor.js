@@ -1,5 +1,6 @@
-$("#create-tutor-form").on("submit", function (event) {
+$("#create-tutor-form").on('submit', function (event) {
     event.preventDefault();
+
     let userTutorData = {
         firstName: $("#userFirstName").val().trim(),
         lastName: $("#userLastName").val().trim(),
@@ -9,9 +10,10 @@ $("#create-tutor-form").on("submit", function (event) {
         grade: $("#userGrade").val().trim(),
         photo: $("#userPhoto").val().trim()
     }
+    console.log("User Tutor Data:");
     console.log(userTutorData);
     $.ajax('api/create-tutor', {
-        type: 'POST',
+        type: "POST",
         data: userTutorData
     }).then(function (data) {
         window.location.replace(data);
