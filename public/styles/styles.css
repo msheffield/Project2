@@ -15,3 +15,18 @@
   color: black;
 }
 
+#loginX {
+  margin-left:-10px;
+  width: 1100px;
+  height: 534px;
+  font-size: 20px;
+}
+
+#loginZ {
+  margin-left: 20px;
+  font-size: 20px;
+}
+
+#rowX {
+  margin-top: 79px;
+}
