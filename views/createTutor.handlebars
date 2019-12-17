@@ -19,7 +19,7 @@
           </div>
           <div class="col-md-4 mb-3">
             <label for="userPhoneNumber">Phone Number</label>
-            <input type="text" class="form-control" id="userPhoneNumber" placeholder="1-(206)-867-5309">
+            <input type="text" class="form-control" id="userPhoneNumber" placeholder="2068675309">
           </div>
         </div>
         <div class="form-row">
@@ -67,9 +67,20 @@
             </div>
           </div>
         </div>
+        <div class="form-row">
+          <div class="col-md-12">
+            <h4>Select Subjects</h4>
+            <div id="subjects">
+              <div class="form-group">
+                {{#each subjects}}
+                {{> subject-block}}
+                {{/each}}
+              </div>
+            </div>
+          </div>
+        </div>
         <button class="btn btn-primary" id="create-tutor-submit" type="submit">Create Tutor</button>
       </form>
     </div>
-
   </div>
 </div>
