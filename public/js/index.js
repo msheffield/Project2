@@ -7,7 +7,8 @@ var API = {
       url: "/tutors",
       type: "POST",
       data: queryData
-    }).then(function () {
+    }).then(function (dbTutorData) {
+      //refreshTutorList(dbTutorData);
       location.reload();
     });
   }
@@ -17,13 +18,12 @@ var handleSearchSubmit = function () {
   event.preventDefault();
   var querySubjects = [];
   var checkedElements = $(".custom-control-input:checked");
-  for(var i = 0; i < checkedElements.length; i++)
-  {
+  for (var i = 0; i < checkedElements.length; i++) {
     console.log(checkedElements[i]);
     console.log($(checkedElements[i]).val());
     querySubjects.push($(checkedElements[i]).val());
   }
-  
+
   var queryData = {
     grade: $("#gradeDropdown").val(),
     skillLevel: $("#skillsDropdown").val(),
@@ -57,6 +57,28 @@ var refreshSubjects = function () {
   });
 };
 
+var refreshTutorList = function (dbTutorData) {
+  console.log(dbTutorData);
+  for (var i = 0; i < dbTutorData.length; i++) {
+    console.log(dbTutorData[i].firstName);
+    // var tutorId = dbTutorData[i].id;
+    // if (!(tutorId in tutorsObj)) {
+    //   tutorsObj[tutorId] = dbTutorData[i];
+    //   tutorsObj[tutorId].subjectName = [];
+    // }
+    // console.log("dbTutorData[" + i + "] = " + dbTutorData[i]);
+    // tutorsObj[tutorId].subjectName.push(dbTutorData[i].name.toString());
+
+    var listItem = $("<li>").addClass("list-group-item");
+    listItem.text(dbTutorData[i].firstName);
+    $("#list-tutor").append(listItem);
+  }
+  // var tutors = [];
+  // for (var prop in tutorsObj) {
+  //   tutors.push(tutorsObj[prop]);
+  // }
+
+}
 // Sign-Up/Login
 
 $('#signup-form').on('submit', function (event) {
@@ -70,7 +92,7 @@ $('#signup-form').on('submit', function (event) {
   $.ajax('/api/signup', {
     type: 'POST',
     data: userData
-  }).catch(function(error) {
+  }).catch(function (error) {
     console.log(error);
   });
 });
@@ -86,12 +108,16 @@ $('#login-form').on('submit', function (event) {
   $.ajax('/api/login', {
     type: 'POST',
     data: userData
-  }).then(function(data) {
-    
+  }).then(function (data) {
+
     window.location.href = '/index';
-  }).catch(function(error) {
+  }).catch(function (error) {
     console.log(error)
   });
 });
 
+$searchBtn.on("click", handleSearchSubmit);
+$("#btn-subject").on("click", function(){
+  refreshSubjects();
+});
 

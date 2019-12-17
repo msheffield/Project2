@@ -13,6 +13,7 @@ module.exports = function(app) {
   app.post("/tutors", function (req, res) {
     //use raw sql to join three tables
     console.log(req.body);
+    var hbsObject;
     var condition = "";
     if (req.body.grade != 0){
       condition += " t.grade = " + req.body.grade + " AND";
@@ -38,34 +39,46 @@ module.exports = function(app) {
 
     console.log(sql);
 
-    db.sequelize.query(sql).then(function(dbTutorData){
+    db.sequelize.query(sql).then(function(dbResult){
       //build return object array and render tutor-block.handlebars
-      var tutorsObj = {};
-      console.log(dbTutorData);
-      //aggregate data by tutor id
-    //   for (var i = 0; i < dbTutorData.length; i++){
-    //     var tutorId = dbTutorData[i].id;
-    //     if (!(tutorId in tutorsObj)){
-    //       tutorsObj[tutorId] = dbTutorData[i];
-    //       tutorsObj[tutorId].subjectName = [];
-    //     }
-    //     console.log("dbTutorData[" + i + "] = " + dbTutorData[i]);
-    //     tutorsObj[tutorId].subjectName.push(dbTutorData[i].name.toString());
-    //   }
-    //  var tutors = [];
+      // var tutorsObj = {};
+      console.log(dbResult[0]);
+      var dbTutorData = dbResult[0];
+       var tutors = [];
+      // aggregate data by tutor id
+      for (var i = 0; i < dbTutorData.length; i++){
+        // var tutorId = dbTutorData[i].id;
+        // if (!(tutorId in tutorsObj)){
+        //   tutorsObj[tutorId] = dbTutorData[i];
+        //   tutorsObj[tutorId].subjectName = [];
+        // }
+        // console.log("dbTutorData[" + i + "] = " + dbTutorData[i]);
+        // tutorsObj[tutorId].subjectName.push(dbTutorData[i].name.toString());
+        console.log(dbTutorData[i]);
+        tutors.push({
+          photo: dbTutorData[i].photo,
+          lastName: dbTutorData[i].lastName,
+          firstName: dbTutorData[i].firstName,
+          description: dbTutorData[i].description,
+            skillLevel: dbTutorData[i].skillLevel,
+            phoneNumber: dbTutorData[i].phoneNumber
+        });
+      }
+    
     // for (var prop in tutorsObj){
     //   tutors.push(tutorsObj[prop]);
     // }
-    // console.log(tutors);
-      res.render("index",{
-        tutors: dbTutorData
-      });
+    console.log(tutors);
       
+    //using html as i CANNOT get handlebar work here
+   
+    hbsObject = {
+      tutors: tutors
+    };
+      
+      //res.json(dbTutorData[0]);
     });
-  });
-  
-  app.get("/index", function(req, res) {
-    res.render("index");
+    res.render("partials/tutor-block", hbsObject);
   });
 
   app.get("/signup", function(req, res) {
