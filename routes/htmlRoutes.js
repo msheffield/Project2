@@ -2,8 +2,8 @@ var db = require("../models");
 let isAuthenticated = require('../config/middleware/isAuthenticated');
 
 module.exports = function(app) {
-  app.get('/', isAuthenticated, function(req, res) {
-    res.redirect('/index')
+  app.get('/', isAuthenticated.authLogin, function(req, res) {
+    res.redirect('/index');
   })
 
   // // Load index page
@@ -30,14 +30,20 @@ module.exports = function(app) {
   //   res.render("404");
   // });
 
+  app.get("/index", function(req, res) {
+    res.render("index");
+  });
 
   app.get("/signup", function(req, res) {
+    if (req.session.user || req.user) {
+      res.redirect('/');
+    }
     res.render("signup");
   });
 
   app.get("/login", function(req, res) {
-    if (req.user) {
-      req.redirect('/');
+    if (req.session.user || req.user) {
+      res.redirect('/');
     }
     res.render("login");
   });
@@ -46,6 +52,4 @@ module.exports = function(app) {
   app.get("*", function(req, res) {
     res.render("404");
   });
-
-  
 };

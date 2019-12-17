@@ -106,12 +106,9 @@ $('#signup-form').on('submit', function(event) {
     first_name: $('#signup_first_name').val().trim(),
     last_name: $('#signup_last_name').val().trim()
   }
-  console.log(userData)
   $.ajax('/api/signup', {
     type: 'POST',
     data: userData
-  }).then(function(data) {
-    window.location.replace(data);
   }).catch(function(error) {
     console.log(error);
   });
@@ -124,13 +121,15 @@ $('#login-form').on('submit', function(event) {
     password: $('#password').val().trim()
   }
   console.log(userData)
+  console.log('Before post request login')
   $.ajax('/api/login', {
     type: 'POST',
     data: userData
   }).then(function(data) {
-    window.location.replace(data);
+    
+    window.location.href = '/index';
   }).catch(function(error) {
-    console.log(error);
+    console.log(error)
   });
 });
 
