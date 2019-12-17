@@ -78,10 +78,7 @@ module.exports = function(app) {
   });
 
   // Login/signup routes
-  app.post('/api/login', passport.authenticate('local'), function(req, res) {
-    console.log('got here');
-    res.redirect('/index');
-  });
+  app.post('/api/login', passport.authenticate('local', {successRedirect: '/index', failureRedirect: 'login'}));
 
   app.post('/api/signup', function(req, res) {
     let data = {
@@ -90,9 +87,11 @@ module.exports = function(app) {
       first_name: req.body.first_name,
       last_name: req.body.last_name
     }
-    db.User.create(data).then(function() {
+    db.User.create(data).then(function(user){
+      req.session.user = user.dataValues;
       res.redirect('/index');
     }).catch(function(error) {
+      console.log(error)
       res.status(422).json(error.errors[0].message);
     });
   });
