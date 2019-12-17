@@ -1,7 +1,7 @@
 // // Get references to page elements
 // var $exampleText = $("#example-text");
 // var $exampleDescription = $("#example-description");
-// var $submitBtn = $("#submit");
+ var $submitBtn = $("#btn-submitProfile");
 // var $exampleList = $("#example-list");
 var $searchBtn = $("#searchButton");
 
@@ -37,6 +37,18 @@ var API = {
     }).then(function () {
       location.reload();
     });
+  },
+
+  createTutors: function(tutorData){
+    $.ajax({
+      url: "/api/tutors",
+      type: "POST",
+      contentType: "application/json; charset=utf-8",
+      data: tutorData
+    }).then(function(result){
+      console.log(result);
+
+    });
   }
 };
 
@@ -62,6 +74,21 @@ var handleSearchSubmit = function () {
   API.getTutors(queryData);
 };
 
+var handleSubmitProfile = function(){
+  event.preventDefault();
+  var tutorObj = {
+    firstName: "Jane",
+    lastName: "Doe",
+    phoneNumber: "1234567890",
+    location: "Seattle",
+    skillLevel: "8",
+    description: "I love teaching math",
+    grade: 3,
+    subjects: ["math", "music"],
+    accountId: 1
+  };
+  API.createTutors({tutor:JSON.stringify(tutorObj)});
+}
 //refresh subject dropdown items
 var refreshSubjects = function () {
   $("#subjectDropdown").empty();
@@ -150,6 +177,7 @@ var refreshSubjects = function () {
 
 // Add event listeners to the submit and delete buttons
 $searchBtn.on("click", handleSearchSubmit);
+$submitBtn.on("click", handleSubmitProfile);
 // $submitBtn.on("click", handleFormSubmit);
 // $exampleList.on("click", ".delete", handleDeleteBtnClick);
 refreshSubjects();

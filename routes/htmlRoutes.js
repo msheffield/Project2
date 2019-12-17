@@ -10,6 +10,10 @@ module.exports = function (app) {
     res.render("index.handlebars");
   });
 
+  app.get("/profile", function(req, res){
+    res.render("createTutor.handlebars");
+  });
+  
   app.post("/tutors", function (req, res) {
     //use raw sql to join three tables
     console.log(req.body);

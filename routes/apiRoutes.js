@@ -5,6 +5,8 @@ var md5 = require("blueimp-md5");
 module.exports = function(app) {
   app.post("/api/tutors", function(req, res) {
     console.log(req.body);
+    var tutorData = JSON.parse(req.body["tutor"]);
+    console.log("TUTOR DATA !!!!!!" + tutorData);
     //insert into tutor table
     db.Tutor.create({
       firstName: req.body.firstName,
@@ -34,6 +36,7 @@ module.exports = function(app) {
               tutorId: dbTutor.id
             }).then(function(dbTutorSubject) {
               return res.status(200).end();
+              // return res.render("createTutor");
             });
           }
         });
