@@ -26,14 +26,14 @@ module.exports = function(app) {
           }
         }).then(function(dbSubject) {
           if (!dbSubject) {
-            return res.status(400);
+            return res.status(400).end();
           } else {
             //insert into tutorsubject table
             db.TutorSubject.create({
               subjectId: dbSubject.id,
               tutorId: dbTutor.id
             }).then(function(dbTutorSubject) {
-              return res.status(200).json(dbTutor);
+              return res.status(200).end();
             });
           }
         });
@@ -43,6 +43,7 @@ module.exports = function(app) {
 
   //post account
   app.post("/api/accounts", function(req, res) {
+    console.log("routing to create accounts");
     db.Account.create({
       username: req.body.username,
       password: md5(req.body.password),
@@ -68,6 +69,13 @@ module.exports = function(app) {
     });
   });
 
+  //get all subjects
+  app.get("/api/subjects", function(req, res){
+    console.log("get all subjects");
+    db.Subject.findAll({}).then(function(data){
+      res.json(data);
+    });
+  });
 
   // Login/signup routes
   app.post('/api/login', passport.authenticate('local', {successRedirect: '/index', failureRedirect: 'login'}));
