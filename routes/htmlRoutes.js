@@ -10,7 +10,7 @@ module.exports = function(app) {
     res.render("index.handlebars");
   });
 
-  app.post("/tutors", function (req, res) {
+  app.get("/tutors", function (req, res) {
     //use raw sql to join three tables
     console.log(req.body);
     var hbsObject;
@@ -78,21 +78,42 @@ module.exports = function(app) {
       
       //res.json(dbTutorData[0]);
     });
-    res.render("partials/tutor-block", hbsObject);
+    res.render("index", hbsObject);
+  });
+
+  app.get("/index", function(req, res) {
+    if (req.session.user || req.user) {
+      //res.redirect('/index');
+    } else {
+      res.redirect("login");
+    }
+  });
+
+  // Load create tutor page
+  app.get("/create-tutor", function (req, res) {
+    console.log("getting all subjects");
+    db.Subject.findAll({}).then(function (data) {
+      let renderObj = {
+        subjects: data
+      };
+      res.render("createTutor", renderObj);
+    });
   });
 
   app.get("/signup", function(req, res) {
     if (req.session.user || req.user) {
       res.redirect('/');
+    } else {
+      res.render("signup");
     }
-    res.render("signup");
   });
 
   app.get("/login", function(req, res) {
     if (req.session.user || req.user) {
       res.redirect('/');
+    } else {
+      res.render("login");
     }
-    res.render("login");
   });
 
   // Render 404 page for any unmatched routes

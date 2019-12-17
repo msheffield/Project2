@@ -1,3 +1,17 @@
-.list-group-item {
-  line-height: 2.5;
+.jumbotron {
+
+  margin-top: 40px;
+  text-align: center;
+  background-size: cover;
+  color: #ffffff;
+  background-repeat: no-repeat;
+  background-position: right;
+  background-color: lightseagreen;
+
 }
+.btn.btn-primary.dropdown-toggle.mr-4 {
+
+  background: #ffffff;
+  color: black;
+}
+
