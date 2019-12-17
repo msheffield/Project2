@@ -50,7 +50,6 @@ module.exports = function(sequelize, DataTypes) {
     Tutor.belongsTo(models.Account);
     Tutor.belongsToMany(models.Subject, {
       through: "TutorSubject",
-      as: "subjects",
       foreignKey: "tutorId",
       otherKey: "subjectId"
     });

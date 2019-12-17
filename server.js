@@ -21,6 +21,21 @@ app.engine(
 );
 app.set("view engine", "handlebars");
 
+
+// PassportJS
+let passport = require('passport');
+let session = require('express-session');
+
+app.use(session({
+  secret: 'tutors are awesome',
+  resave: true,
+  saveUninitialized: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+require('./config/passport');
+
+
 // Routes
 require("./routes/apiRoutes")(app);
 require("./routes/htmlRoutes")(app);
@@ -29,14 +44,24 @@ var syncOptions = { force: false };
 
 // If running a test, set syncOptions.force to true
 // clearing the `testdb`
-if (process.env.NODE_ENV === "development") {
+if (process.env.NODE_ENV === "test") {
   syncOptions.force = true;
-  console.log("dev mode");
 }
 
 // Starting the server, syncing our models ------------------------------------/
-db.sequelize.sync({force:true}).then(function() {
-  app.listen(PORT, function() {
+db.sequelize.sync(syncOptions).then(function () {
+  //////To modify - temp code to insert default subject values
+  if (syncOptions.force) {
+    db.Subject.bulkCreate([
+      { name: "math" },
+      { name: "reading" },
+      { name: "writing" }
+    ]).then(function () {
+      console.log(db.Subject.findAll());
+    });
+  }
+  ////////////////////////////////////////////
+  app.listen(PORT, function () {
     console.log(
       "==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.",
       PORT,

@@ -1,22 +1,82 @@
 var db = require("../models");
+let isAuthenticated = require('../config/middleware/isAuthenticated');
 
+<<<<<<< HEAD
 module.exports = function(app) {
 <<<<<<< HEAD
   // Load index page
   app.get("/", function(req, res) {
     res.render("index", {});
+=======
+module.exports = function (app) {
+  app.get('/', isAuthenticated, function (req, res) {
+    res.redirect('/index');
+  })
+
+  app.get("/index", function(req, res){
+    res.render("index.handlebars");
+>>>>>>> 847b8ca438586a5586ce819bc9d761a7cf631a52
   });
 
-  // Render Tutors search page
+  app.post("/tutors", function (req, res) {
+    //use raw sql to join three tables
+    console.log(req.body);
+    var condition = "";
+    if (req.body.grade != 0){
+      condition += " t.grade = " + req.body.grade + " AND";
+    }
+    if (req.body.skillLevel != 0){
+      condition += " t.skillLevel = " + req.body.skillLevel + " AND";
+    }
+    if (req.body.location != 0){
+      condition += " t.location = " + req.body.location + " AND";
+    }
+    if (req.body.subject !== "[]"){
+      let subjects = req.body.subject.replace("[", "(").replace("]", ")");
+      condition += " s.name IN " + subjects;
+    }
 
-  app.get("/tutors", function(req, res) {
-    db.Tutor.findAll({}).then(function(tutors) {
-      res.render("some table name", {
-        tutor: tutors
+    var sql = "SELECT t.id, t.firstName, t.lastName, t.grade, t.location, t.skillLevel, t.phoneNumber, t.photo, t.description, s.name";
+    sql += " FROM Tutors AS t";
+    sql += " INNER JOIN TutorSubjects";
+    sql += " ON t.id = TutorSubjects.tutorId";
+    sql += " INNER JOIN Subjects AS s";
+    sql += " ON TutorSubjects.subjectId = s.id";
+    sql += (condition.trim() === "")? ";" : " WHERE " + condition + ";";
+
+    console.log(sql);
+
+    db.sequelize.query(sql).then(function(dbTutorData){
+      //build return object array and render tutor-block.handlebars
+      var tutorsObj = {};
+      console.log(dbTutorData);
+      //aggregate data by tutor id
+    //   for (var i = 0; i < dbTutorData.length; i++){
+    //     var tutorId = dbTutorData[i].id;
+    //     if (!(tutorId in tutorsObj)){
+    //       tutorsObj[tutorId] = dbTutorData[i];
+    //       tutorsObj[tutorId].subjectName = [];
+    //     }
+    //     console.log("dbTutorData[" + i + "] = " + dbTutorData[i]);
+    //     tutorsObj[tutorId].subjectName.push(dbTutorData[i].name.toString());
+    //   }
+    //  var tutors = [];
+    // for (var prop in tutorsObj){
+    //   tutors.push(tutorsObj[prop]);
+    // }
+    // console.log(tutors);
+      res.render("index",{
+        tutors: dbTutorData
       });
+      
     });
   });
+<<<<<<< HEAD
 =======
+=======
+
+
+>>>>>>> 847b8ca438586a5586ce819bc9d761a7cf631a52
   // // Load index page
   // app.get("/", function(req, res) {
   //   db.Example.findAll({}).then(function(dbExamples) {
@@ -40,7 +100,27 @@ module.exports = function(app) {
   // app.get("*", function(req, res) {
   //   res.render("404");
   // });
+<<<<<<< HEAD
 >>>>>>> b10f0389cca50ae675ecb2f34de66753355fe363
+=======
+
+
+  app.get("/signup", function (req, res) {
+    res.render("signup");
+  });
+
+  app.get("/login", function (req, res) {
+    if (req.user) {
+      req.redirect('/');
+    }
+    res.render("login");
+  });
+
+  // Render 404 page for any unmatched routes
+  app.get("*", function (req, res) {
+    res.render("404");
+  });
+>>>>>>> 847b8ca438586a5586ce819bc9d761a7cf631a52
 
 
 };
