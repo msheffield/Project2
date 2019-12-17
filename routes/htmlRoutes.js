@@ -6,10 +6,6 @@ module.exports = function(app) {
     res.redirect('/index');
   })
 
-  app.get("/index", function(req, res){
-    res.render("index.handlebars");
-  });
-
   app.post("/tutors", function (req, res) {
     //use raw sql to join three tables
     console.log(req.body);
@@ -66,7 +62,12 @@ module.exports = function(app) {
 
   app.get("/index", function(req, res) {
     if (req.session.user || req.user) {
-      res.redirect('/index');
+      db.Tutor.findAll({}).then(function (data) {
+        let renderObj = {
+          subjects: data
+        };
+        res.render("index", renderObj);
+      });
     } else {
       res.redirect("login");
     }
