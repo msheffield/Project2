@@ -6,12 +6,9 @@ var API = {
     $.ajax({
       url: "/tutors/" + queryData.grade + "/" +queryData.skillLevel + "/" + queryData.location + "/" + queryData.subject,
       type: "GET",
-      /*data: queryData*/
     }).then(function (dbTutorData) {
-      //refreshTutorList(dbTutorData);
+      refreshTutorList(dbTutorData);
       console.log(dbTutorData[0]);
-      $("#item").text(dbTutorData[0].firstName);
-      //location.reload();
     });
   }
 };
@@ -61,25 +58,13 @@ var refreshSubjects = function () {
 
 var refreshTutorList = function (dbTutorData) {
   console.log(dbTutorData);
+  $("#list-tutors").empty();
   for (var i = 0; i < dbTutorData.length; i++) {
-    console.log(dbTutorData[i].firstName);
-    // var tutorId = dbTutorData[i].id;
-    // if (!(tutorId in tutorsObj)) {
-    //   tutorsObj[tutorId] = dbTutorData[i];
-    //   tutorsObj[tutorId].subjectName = [];
-    // }
-    // console.log("dbTutorData[" + i + "] = " + dbTutorData[i]);
-    // tutorsObj[tutorId].subjectName.push(dbTutorData[i].name.toString());
-
+    var displayText = dbTutorData[i].firstName + " " + dbTutorData[i].lastName + " " + dbTutorData[i].location + " ";
     var listItem = $("<li>").addClass("list-group-item");
-    listItem.text(dbTutorData[i].firstName);
-    $("#list-tutor").append(listItem);
+    listItem.text(displayText);
+    $("#list-tutors").append(listItem);
   }
-  // var tutors = [];
-  // for (var prop in tutorsObj) {
-  //   tutors.push(tutorsObj[prop]);
-  // }
-
 }
 // Sign-Up/Login
 
@@ -119,7 +104,6 @@ $('#login-form').on('submit', function (event) {
 });
 
 $searchBtn.on("click", handleSearchSubmit);
-$("#btn-subject").on("click", function(){
-  refreshSubjects();
-});
+refreshSubjects();
+
 
