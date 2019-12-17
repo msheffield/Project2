@@ -1,3 +1,5 @@
+let bcrypt = require("bcryptjs");
+
 module.exports = function(sequelize, DataTypes) {
   var Account = sequelize.define("Account", {
     role: {
@@ -20,5 +22,14 @@ module.exports = function(sequelize, DataTypes) {
     },
     reserved1: DataTypes.TEXT
   });
+
+  Account.prototype.validPassword = function (password) {
+    return bcrypt.compareSync(password, this.password);
+  };
+
+  Account.beforeCreate(function (user, options) {
+      user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(), null);
+  });
+
   return Account;
 };
