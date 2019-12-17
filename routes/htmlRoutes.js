@@ -1,21 +1,13 @@
 var db = require("../models");
 let isAuthenticated = require('../config/middleware/isAuthenticated');
 
-<<<<<<< HEAD
-module.exports = function(app) {
-<<<<<<< HEAD
-  // Load index page
-  app.get("/", function(req, res) {
-    res.render("index", {});
-=======
 module.exports = function (app) {
   app.get('/', isAuthenticated, function (req, res) {
     res.redirect('/index');
   })
 
   app.get("/index", function(req, res){
-    res.render("index.handlebars");
->>>>>>> 847b8ca438586a5586ce819bc9d761a7cf631a52
+    res.render("index");
   });
 
   app.post("/tutors", function (req, res) {
@@ -71,12 +63,9 @@ module.exports = function (app) {
       
     });
   });
-<<<<<<< HEAD
-=======
-=======
 
 
->>>>>>> 847b8ca438586a5586ce819bc9d761a7cf631a52
+
   // // Load index page
   // app.get("/", function(req, res) {
   //   db.Example.findAll({}).then(function(dbExamples) {
@@ -100,10 +89,6 @@ module.exports = function (app) {
   // app.get("*", function(req, res) {
   //   res.render("404");
   // });
-<<<<<<< HEAD
->>>>>>> b10f0389cca50ae675ecb2f34de66753355fe363
-=======
-
 
   app.get("/signup", function (req, res) {
     res.render("signup");
@@ -120,7 +105,6 @@ module.exports = function (app) {
   app.get("*", function (req, res) {
     res.render("404");
   });
->>>>>>> 847b8ca438586a5586ce819bc9d761a7cf631a52
 
 
 };
