@@ -3,21 +3,23 @@ let LocalStrategy = require('passport-local').Strategy;
 let db = require('../models');
 
 // Use local strategy for authentication
-passport.use(new LocalStrategy(
+passport.use('local', new LocalStrategy(
     {
-        usernameField: 'email'
+        usernameField: 'email',
+        passwordField: 'password'
     },
-    function(email, password, done) {
+    function(email, password, cb) {
         db.User.findOne({
             where: {
                 email: email
             }
         }).then(function(dbUser) {
-            if (!dbUser || !dbUser.validPassword(password)) {
-                return done(null, false, {
+            if (!dbUser && !dbUser.validPassword(password)) {
+                return cb(null, false, {
                     message: 'Incorrect email or password'
                 });
             }
+            return cb(null, dbUser);
         });
     }
 ));
@@ -27,7 +29,7 @@ passport.serializeUser(function(user, cb){
 });
 
 passport.deserializeUser(function(user, cb){
-    cb(null, obj);
+    cb(null, false);
 });
 
 module.exports = passport;

@@ -1,8 +1,8 @@
 var db = require("../models");
 let isAuthenticated = require('../config/middleware/isAuthenticated');
 
-module.exports = function (app) {
-  app.get('/', isAuthenticated, function (req, res) {
+module.exports = function(app) {
+  app.get('/', isAuthenticated.authLogin, function(req, res) {
     res.redirect('/index');
   })
 
@@ -94,9 +94,9 @@ module.exports = function (app) {
     res.render("signup");
   });
 
-  app.get("/login", function (req, res) {
-    if (req.user) {
-      req.redirect('/');
+  app.get("/login", function(req, res) {
+    if (req.session.user || req.user) {
+      res.redirect('/');
     }
     res.render("login");
   });
@@ -105,6 +105,4 @@ module.exports = function (app) {
   app.get("*", function (req, res) {
     res.render("404");
   });
-
-
 };
