@@ -64,7 +64,7 @@ module.exports = function(app) {
     if (req.session.user || req.user) {
       db.Tutor.findAll({}).then(function (data) {
         let renderObj = {
-          tutors: data
+          subjects: data
         };
         res.render("index", renderObj);
       });
