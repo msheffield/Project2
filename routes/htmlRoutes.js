@@ -6,10 +6,6 @@ module.exports = function(app) {
     res.redirect('/index');
   })
 
-  app.get("/index", function(req, res){
-    res.render("index.handlebars");
-  });
-
   app.post("/tutors", function (req, res) {
     //use raw sql to join three tables
     console.log(req.body);
