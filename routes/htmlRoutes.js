@@ -72,6 +72,17 @@ module.exports = function(app) {
     }
   });
 
+  // Load create tutor page
+  app.get("/create-tutor", function (req, res) {
+    console.log("getting all subjects");
+    db.Subject.findAll({}).then(function (data) {
+      let renderObj = {
+        subjects: data
+      };
+      res.render("createTutor", renderObj);
+    });
+  });
+
   app.get("/signup", function(req, res) {
     if (req.session.user || req.user) {
       res.redirect('/');

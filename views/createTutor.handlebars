@@ -1,119 +1,86 @@
 <div class="container">
 
-    <div class="jumbotron">
-        <h1 class="text-center"><span class="fas fa-book-reader"></span> Tutor Finder</h1>
-        <hr>
-        <h2 class="text-center">Find a perfect Tutor for your need!</h2>
-        <br>
+  <div class="jumbotron">
+    <h1 class="text-center"><span class="fas fa-book-reader"></span> Tutor Finder</h1>
+    <hr>
+    <h2 class="text-center">Enter Tutor information below:</h2>
+    <br>
 
-        <div class="text-center">
-            <form>
-                <div class="form-row">
-                    <div class="col-md-4 mb-3">
-                        <label for="validationDefault01">First name</label>
-                        <input type="text" class="form-control" id="validationDefault01" value="Mark" required>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="validationDefault02">Last name</label>
-                        <input type="text" class="form-control" id="validationDefault02" value="Otto" required>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="validationDefaultUsername">Username</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="inputGroupPrepend2">@</span>
-                            </div>
-                            <input type="text" class="form-control" id="validationDefaultUsername"
-                                aria-describedby="inputGroupPrepend2" required>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-md-6 mb-3">
-                        <label for="validationDefault03">City</label>
-                        <input type="text" class="form-control" id="validationDefault03" required>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <label for="validationDefault04">State</label>
-                        <select class="custom-select" id="validationDefault04" required>
-                            <option selected disabled value="">Choose...</option>
-                            <option>...</option>
-                        </select>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <label for="validationDefault05">Zip</label>
-                        <input type="text" class="form-control" id="validationDefault05" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
-                    </div>
-                </div>
-                <button class="btn btn-primary" type="submit">Submit form</button>
-            </form>
+    <div class="text-center">
+      <form id="create-tutor-form">
+        <div class="form-row">
+          <div class="col-md-4 mb-3">
+            <label for="userFirstName">First name</label>
+            <input type="text" class="form-control" id="userFirstName" placeholder="Mark" required>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="userLastName">Last name</label>
+            <input type="text" class="form-control" id="userLastName" placeholder="Gammill" required>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="userPhoneNumber">Phone Number</label>
+            <input type="text" class="form-control" id="userPhoneNumber" placeholder="2068675309">
+          </div>
         </div>
-
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{{!-- <div id="home">
-  <div class="container">
-    <div class="row">
-      <div class="col-8 offset-2">
-        <h1>{{msg}}</h1>
-        <h2>This is our Home Page!</h2>
-        <form class="clearfix mb-4" action="POST">
-          <div class="form-group">
-            <label for="example-text">Example Text</label>
-            <input type="text" id="example-text" class="form-control" aria-describedby="example-text" placeholder="Enter Example Text">
+        <div class="form-row">
+          <div class="col-md-3 mb-3">
+            <label for="userLocation">City</label>
+            <input type="text" class="form-control" id="userLocation" placeholder="Seattle" required>
           </div>
-          <div class="form-group">
-            <label for="example-description">Example Description</label>
-            <textarea class="form-control" id="example-description" aria-describedby="example-description" placeholder="Enter Example Description"></textarea>
+          <div class="col-md-3 mb-3">
+            <label for="userSkillLevel">Skill Level</label>
+            <select class="custom-select" id="userSkillLevel">
+              <option selected disabled value="">Choose Skill Level</option>
+              <option value="1">1 - Struggling Students</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10 - Above and Beyond Students</option>
+            </select>
           </div>
-          <button id="submit" class="btn btn-primary float-right">Submit</button>
-        </form>
-        <h3>Examples:</h3>
-        <ul id="example-list" class="list-group">
-          {{#each examples}}
-          <li data-id="{{this.id}}" class="list-group-item">
-            <a href="example/{{this.id}}">{{this.text}}</a>
-            <button class="btn btn-danger float-right delete">ｘ</button>
-          </li>
-          {{/each}}
-        </ul>
-      </div>
+          <div class="col-md-3 mb-3">
+            <label for="userGrade">Grade</label>
+            <select class="custom-select" id="userGrade" required>
+              <option selected disabled value="">Choose Grade</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </div>
+          <div class="col-md-3 mb-3">
+            <label for="userPhoto">Photo URL</label>
+            <input type="text" class="form-control" id="userPhoto">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="userDescription">Brief Description</label>
+              <textarea class="form-control" id="userDescription" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-md-12">
+            <h4>Select Subjects</h4>
+            <div id="subjects">
+              <div class="form-group">
+                {{#each subjects}}
+                {{> subject-block}}
+                {{/each}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-primary" id="create-tutor-submit" type="submit">Create Tutor</button>
+      </form>
     </div>
   </div>
 </div>
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="/js/index.js"></script> --}}
