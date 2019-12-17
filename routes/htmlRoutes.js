@@ -6,26 +6,23 @@ module.exports = function(app) {
     res.redirect('/index');
   })
 
-  app.get("/index", function(req, res){
-    res.render("index.handlebars");
-  });
-
-  app.get("/tutors", function (req, res) {
+  app.get("/tutors/:grade/:skillLevel/:location/:subject", function (req, res) {
     //use raw sql to join three tables
-    console.log(req.body);
+
+    console.log(req.params.subject);
     var hbsObject;
     var condition = "";
-    if (req.body.grade != 0){
-      condition += " t.grade = " + req.body.grade + " AND";
+    if (req.params.grade != 0){
+      condition += " t.grade = " + req.params.grade + " AND";
     }
-    if (req.body.skillLevel != 0){
-      condition += " t.skillLevel = " + req.body.skillLevel + " AND";
+    if (req.params.skillLevel != 0){
+      condition += " t.skillLevel = " + req.params.skillLevel + " AND";
     }
-    if (req.body.location != 0){
-      condition += " t.location = " + req.body.location + " AND";
+    if (req.params.location != 0){
+      condition += " t.location = " + req.params.location + " AND";
     }
-    if (req.body.subject !== "[]"){
-      let subjects = req.body.subject.replace("[", "(").replace("]", ")");
+    if (req.params.subject !== "[]"){
+      let subjects = req.params.subject.replace("[", "(").replace("]", ")");
       condition += " s.name IN " + subjects;
     }
 
@@ -77,13 +74,21 @@ module.exports = function(app) {
     };
       
       //res.json(dbTutorData[0]);
+      console.log("/tutor rendering");
+      res.json(tutors);
     });
-    res.render("index", hbsObject);
+
   });
 
   app.get("/index", function(req, res) {
     if (req.session.user || req.user) {
-      //res.redirect('/index');
+      db.Tutor.findAll({}).then(function (data) {
+        let renderObj = {
+          tutors: data
+        };
+        console.log("/index rendering");
+        res.render("index", renderObj);
+      });
     } else {
       res.redirect("login");
     }

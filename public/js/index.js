@@ -4,12 +4,14 @@ var $searchBtn = $("#searchButton");
 var API = {
   getTutors: function (queryData) {
     $.ajax({
-      url: "/tutors",
+      url: "/tutors/" + queryData.grade + "/" +queryData.skillLevel + "/" + queryData.location + "/" + queryData.subject,
       type: "GET",
-      data: queryData
+      /*data: queryData*/
     }).then(function (dbTutorData) {
       //refreshTutorList(dbTutorData);
-      location.reload();
+      console.log(dbTutorData[0]);
+      $("#item").text(dbTutorData[0].firstName);
+      //location.reload();
     });
   }
 };
