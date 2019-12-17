@@ -37,8 +37,8 @@ require('./config/passport');
 
 
 // Routes
-require("./routes/apiRoutes")(app);
 require("./routes/htmlRoutes")(app);
+require("./routes/apiRoutes")(app);
 
 var syncOptions = { force: false };
 
