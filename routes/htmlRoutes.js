@@ -62,7 +62,12 @@ module.exports = function(app) {
 
   app.get("/index", function(req, res) {
     if (req.session.user || req.user) {
-      res.redirect('/index');
+      db.Tutor.findAll({}).then(function (data) {
+        let renderObj = {
+          tutors: data
+        };
+        res.render("index", renderObj);
+      });
     } else {
       res.redirect("login");
     }
