@@ -63,23 +63,29 @@ module.exports = function(app) {
       
     });
   });
-  
+
   app.get("/index", function(req, res) {
-    res.render("index");
+    if (req.session.user || req.user) {
+      res.redirect('/index');
+    } else {
+      res.redirect("login");
+    }
   });
 
   app.get("/signup", function(req, res) {
     if (req.session.user || req.user) {
       res.redirect('/');
+    } else {
+      res.render("signup");
     }
-    res.render("signup");
   });
 
   app.get("/login", function(req, res) {
     if (req.session.user || req.user) {
       res.redirect('/');
+    } else {
+      res.render("login");
     }
-    res.render("login");
   });
 
   // Render 404 page for any unmatched routes

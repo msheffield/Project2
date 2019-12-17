@@ -82,12 +82,12 @@ module.exports = function(app) {
 
   app.post('/api/signup', function(req, res) {
     let data = {
-      email: req.body.email,
+      role: req.body.role,
+      username: req.body.username,
       password: req.body.password,
-      first_name: req.body.first_name,
-      last_name: req.body.last_name
+      email: req.body.email
     }
-    db.User.create(data).then(function(user){
+    db.Account.create(data).then(function(user){
       req.session.user = user.dataValues;
       res.redirect('/index');
     }).catch(function(error) {

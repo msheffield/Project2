@@ -62,10 +62,10 @@ var refreshSubjects = function () {
 $('#signup-form').on('submit', function (event) {
   event.preventDefault();
   let userData = {
+    role: $('#signup_role').val().trim(),
     email: $('#signup_email').val().trim(),
     password: $('#signup_password').val().trim(),
-    first_name: $('#signup_first_name').val().trim(),
-    last_name: $('#signup_last_name').val().trim()
+    username: $('#signup_username').val().trim()
   }
   $.ajax('/api/signup', {
     type: 'POST',
