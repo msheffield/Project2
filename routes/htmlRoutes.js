@@ -16,7 +16,7 @@ module.exports = function (app) {
       condition.push(" t.skillLevel = " + req.params.skillLevel);
     }
     if (req.params.location != 0) {
-      condition.push(" t.location = " + req.params.location);
+      condition.push(" t.location = " + JSON.stringify(req.params.location));
     }
     if (req.params.subject !== "[]") {
       let subjects = req.params.subject.replace("[", "(").replace("]", ")");

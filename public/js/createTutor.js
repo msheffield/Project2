@@ -19,7 +19,6 @@ $("#create-tutor-submit").on('click', function (event) {
         description: $("#userDescription").val().trim(),
         grade: $("#userGrade").val().trim(),
         photo: $("#userPhoto").val().trim(),
-        accountId: 1,
         subjects: checkedSubjects
     };
 
