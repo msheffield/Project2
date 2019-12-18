@@ -36,3 +36,8 @@
   height: 534px;
   background-color: lightseagreen;
 }
+
+.card-img-top {
+  width: 200px;
+  height: auto;
+}
