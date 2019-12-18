@@ -39,22 +39,6 @@ module.exports = function (app) {
     db.sequelize.query(sql).then(function (dbResult) {
       console.log(dbResult[0]);
       var dbTutorData = dbResult[0];
-      var tutors = [];
-      // aggregate data by tutor id
-      for (var i = 0; i < dbTutorData.length; i++) {
-        console.log(dbTutorData[i]);
-        tutors.push({
-          photo: dbTutorData[i].photo,
-          lastName: dbTutorData[i].lastName,
-          firstName: dbTutorData[i].firstName,
-          description: dbTutorData[i].description,
-          skillLevel: dbTutorData[i].skillLevel,
-          phoneNumber: dbTutorData[i].phoneNumber,
-          location: dbTutorData[i].location,
-          grade: dbTutorData[i].grade
-        });
-      }
-      console.log(tutors);
       res.render("tutor", {tutors: dbTutorData});
     });
 
