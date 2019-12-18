@@ -3,12 +3,13 @@ var $searchBtn = $("#searchButton");
 
 var API = {
   getTutors: function (queryData) {
+    console.log("getTutors queryData.subject: " + queryData.subject);
     $.ajax({
       url: "/tutors/" + queryData.grade + "/" +queryData.skillLevel + "/" + queryData.location + "/" + queryData.subject,
       type: "GET",
     }).then(function (dbTutorData) {
-      refreshTutorList(dbTutorData);
-      console.log(dbTutorData[0]);
+      //refreshTutorList(dbTutorData);
+      //window.location.href = "/tutors/" + queryData.grade + "/" +queryData.skillLevel + "/" + queryData.location + "/" + queryData.subject;
     });
   }
 };
@@ -16,13 +17,14 @@ var API = {
 var handleSearchSubmit = function () {
   event.preventDefault();
   var querySubjects = [];
-  var checkedElements = $(".custom-control-input:checked");
+  var checkedElements = $(".subject-dropdown-item:checked");
   for (var i = 0; i < checkedElements.length; i++) {
     console.log(checkedElements[i]);
     console.log($(checkedElements[i]).val());
     querySubjects.push($(checkedElements[i]).val());
   }
 
+  console.log("querySubjects = " + querySubjects);
   var queryData = {
     grade: $("#gradeDropdown").val(),
     skillLevel: $("#skillsDropdown").val(),
@@ -30,31 +32,33 @@ var handleSearchSubmit = function () {
     subject: JSON.stringify(querySubjects)
   };
   console.log(queryData);
+  //window.location.href = "/tutors/" + queryData.grade + "/" +queryData.skillLevel + "/" + queryData.location + "/" + queryData.subject;
   API.getTutors(queryData);
 };
 
 //refresh subject dropdown items
-var refreshSubjects = function () {
-  $("#subjectDropdown").empty();
-  $.get("/api/subjects").then(function (data) {
-    console.log(data);
-    for (var i = 0; i < data.length; i++) {
-      var newDropdownItem = $("<a>").addClass("dropdown-item");
-      var newDiv = $("<div>").addClass("custom-control custom-checkbox");
-      var newInput = $("<input>").addClass("custom-control-input");
-      newInput.attr("type", "checkbox");
-      newInput.attr("value", data[i].name);
-      newInput.attr("id", data[i].name);
-      var newLabel = $("<label>").addClass("custom-control-label");
-      newLabel.attr("for", data[i].name);
-      newLabel.text(data[i].name);
-      newDiv.append(newInput);
-      newDiv.append(newLabel);
-      newDropdownItem.append(newDiv);
-      $("#subjectDropdown").append(newDropdownItem);
-    }
-  });
-};
+// var refreshSubjects = function () {
+//   $("#subjectDropdown").empty();
+//   $.get("/api/subjects").then(function (data) {
+//     console.log(data);
+    
+//     for (var i = 0; i < data.length; i++) {
+//       var newDropdownItem = $("<a>").addClass("dropdown-item");
+//       var newDiv = $("<div>").addClass("custom-control custom-checkbox");
+//       var newInput = $("<input>").addClass("custom-control-input");
+//       newInput.attr("type", "checkbox");
+//       newInput.attr("value", data[i].name);
+//       newInput.attr("id", data[i].name);
+//       var newLabel = $("<label>").addClass("custom-control-label");
+//       newLabel.attr("for", data[i].name);
+//       newLabel.text(data[i].name);
+//       newDiv.append(newInput);
+//       newDiv.append(newLabel);
+//       newDropdownItem.append(newDiv);
+//       $("#subjectDropdown").append(newDropdownItem);
+//     }
+//   });
+// };
 
 var refreshTutorList = function (dbTutorData) {
   console.log(dbTutorData);
@@ -104,6 +108,6 @@ $('#login-form').on('submit', function (event) {
 });
 
 $searchBtn.on("click", handleSearchSubmit);
-refreshSubjects();
+//refreshSubjects();
 
 

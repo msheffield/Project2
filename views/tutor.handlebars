@@ -1,50 +1,22 @@
 <div class="container">
-
-  <div class="jumbotron">
-    <!--h1 class="text-center"><span class="fas fa-book-reader"></span> Tutor Finder</h1>
-    <hr>
-    <h2 class="text-center">Find a perfect Tutor for your need!</h2>
-    <br>
-
-    <div class="text-center">
-
-
-    </div>
-    <div class="main">
-
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search for Tutor">
-        <div class="input-group-append">
-          <button class="btn btn-secondary" type="button">
-            <i class="fa fa-search"></i>
-          </button>
-        </div>
-      </div>
-
-    </div-->
-    {{> searchtutor}}
-  </div>
-
-  <div class="container">
-    <ul>
-      {{#each tutors}}
-      <li>
-        <div class="card">
-          <img class="card-img-top" src={{photo}} alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title">{{firstName}} {{lastName}}</h5>
-            <div class="card-text">
-              <p>{{description}}</p>
-              <ul>
-                <li>Skill Level: {{skillLevel}}</li>
-                <li>Phone: {{phoneNumber}}</li>
-                <li>location: {{phoneNumber}}</li>
-              </ul>
-            </div>
+  <ul>
+    {{#each tutors}}
+    <li>
+      <div class="card">
+        <img class="card-img-top" src={{photo}} alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">{{firstName}} {{lastName}}</h5>
+          <div class="card-text">
+            <p>{{description}}</p>
+            <ul>
+              <li>Skill Level: {{skillLevel}}</li>
+              <li>Phone: {{phoneNumber}}</li>
+              <li>location: {{phoneNumber}}</li>
+            </ul>
           </div>
         </div>
-      </li>
-      {{/each}}
-    </ul>
-  </div>
+      </div>
+    </li>
+    {{/each}}
+  </ul>
 </div>

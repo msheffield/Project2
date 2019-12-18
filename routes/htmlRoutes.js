@@ -11,21 +11,22 @@ module.exports = function (app) {
 
     console.log(req.params.subject);
     var hbsObject;
-    var condition = "";
+    var condition = [];
     if (req.params.grade != 0) {
-      condition += " t.grade = " + req.params.grade + " AND";
+      condition.push(" t.grade = " + req.params.grade);
     }
     if (req.params.skillLevel != 0) {
-      condition += " t.skillLevel = " + req.params.skillLevel + " AND";
+      condition.push(" t.skillLevel = " + req.params.skillLevel);
     }
     if (req.params.location != 0) {
-      condition += " t.location = " + req.params.location + " AND";
+      condition.push(" t.location = " + req.params.location);
     }
     if (req.params.subject !== "[]") {
       let subjects = req.params.subject.replace("[", "(").replace("]", ")");
-      condition += " s.name IN " + subjects;
+      condition.push(" s.name IN " + subjects);
     }
 
+    console.log(condition);
     //remote s.name to group by the result
     var sql = "SELECT t.id, t.firstName, t.lastName, t.grade, t.location, t.skillLevel, t.phoneNumber, t.photo, t.description";
     sql += " FROM Tutors AS t";
@@ -33,7 +34,7 @@ module.exports = function (app) {
     sql += " ON t.id = TutorSubjects.tutorId";
     sql += " INNER JOIN Subjects AS s";
     sql += " ON TutorSubjects.subjectId = s.id";
-    sql += (condition.trim() === "") ? "" : " WHERE " + condition;
+    sql += (condition.length === 0) ? "" : " WHERE " + condition.join(" AND ");
     sql += " GROUP BY t.id;";
 
     console.log(sql);
@@ -56,7 +57,8 @@ module.exports = function (app) {
       }
 
       console.log(tutors);
-      res.json(tutors);
+      //res.json(tutors);
+      res.render("tutor", {tutors: tutors});
     });
 
   });
@@ -68,7 +70,13 @@ module.exports = function (app) {
       //     tutors: data
       //   };
       //   console.log("/index rendering");
-        res.render("index");
+      db.Subject.findAll({}).then(function(data){
+        let renderObj = {
+          subjects: data
+        };
+        res.render("partials/searchtutor", renderObj);
+      });
+        // res.render("index", subjectData);
       // });
     } else {
       res.redirect("login");

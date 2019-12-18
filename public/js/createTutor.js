@@ -28,7 +28,7 @@ $("#create-tutor-submit").on('click', function (event) {
 
     $.ajax('api/tutors', {
         type: "POST",
-        data: userTutorData
+        data: {"data":JSON.stringify(userTutorData)}
     }).then(function (data) {
         window.location.replace(data);
     }).catch(function (error) {
