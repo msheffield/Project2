@@ -50,11 +50,12 @@ module.exports = function (app) {
           description: dbTutorData[i].description,
           skillLevel: dbTutorData[i].skillLevel,
           phoneNumber: dbTutorData[i].phoneNumber,
-          location: dbTutorData[i].location
+          location: dbTutorData[i].location,
+          grade: dbTutorData[i].grade
         });
       }
       console.log(tutors);
-      res.render("tutor", {tutors: tutors});
+      res.render("tutor", {tutors: dbTutorData});
     });
 
   });
