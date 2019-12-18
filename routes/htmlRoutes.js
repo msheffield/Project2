@@ -65,7 +65,7 @@ module.exports = function (app) {
     if (req.session.user || req.user) {
       db.Subject.findAll({}).then(function(data){
         let renderObj = {
-          subjects: data
+          tutors: data
         };
         res.render("partials/searchtutor", renderObj);
       });
