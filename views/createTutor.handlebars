@@ -25,7 +25,15 @@
         <div class="form-row">
           <div class="col-md-3 mb-3">
             <label for="userLocation">City</label>
-            <input type="text" class="form-control" id="userLocation" placeholder="Seattle" required>
+            <!--input type="text" class="form-control" id="userLocation" placeholder="Seattle" required-->
+            <select class="custom-select" id="userLocation">
+              <option selected disabled value="">Choose City</option>
+              <option value="Seattle">Seattle</option>
+              <option value="Bellevue">Bellevue</option>
+              <option value="Kirkland">Kirkland</option>
+              <option value="Renton">Renton</option>
+              <option value="Federal Way">Federal Way</option>
+            </select>
           </div>
           <div class="col-md-3 mb-3">
             <label for="userSkillLevel">Skill Level</label>
@@ -47,11 +55,10 @@
             <label for="userGrade">Grade</label>
             <select class="custom-select" id="userGrade" required>
               <option selected disabled value="">Choose Grade</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
+              <option value="1">College</option>
+              <option value="2">High School</option>
+              <option value="3">Middle School</option>
+              <option value="4">Elementary School</option>
             </select>
           </div>
           <div class="col-md-3 mb-3">

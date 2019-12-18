@@ -18,8 +18,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: true,
       validate: {
-        isNumeric: true,
-        len: [10, 10]
+        isNumeric: true
       }
     },
     location: {
