@@ -52,7 +52,8 @@ module.exports = function (app) {
           firstName: dbTutorData[i].firstName,
           description: dbTutorData[i].description,
           skillLevel: dbTutorData[i].skillLevel,
-          phoneNumber: dbTutorData[i].phoneNumber
+          phoneNumber: dbTutorData[i].phoneNumber,
+          location: dbTutorData[i].location
         });
       }
       console.log(tutors);
