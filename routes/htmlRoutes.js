@@ -55,9 +55,7 @@ module.exports = function (app) {
           phoneNumber: dbTutorData[i].phoneNumber
         });
       }
-
       console.log(tutors);
-      //res.json(tutors);
       res.render("tutor", {tutors: tutors});
     });
 
@@ -65,19 +63,12 @@ module.exports = function (app) {
 
   app.get("/index", function (req, res) {
     if (req.session.user || req.user) {
-      // db.Tutor.findAll({}).then(function (data) {
-      //   let renderObj = {
-      //     tutors: data
-      //   };
-      //   console.log("/index rendering");
       db.Subject.findAll({}).then(function(data){
         let renderObj = {
           subjects: data
         };
         res.render("partials/searchtutor", renderObj);
       });
-        // res.render("index", subjectData);
-      // });
     } else {
       res.redirect("login");
     }

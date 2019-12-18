@@ -8,8 +8,7 @@ var API = {
       url: "/tutors/" + queryData.grade + "/" +queryData.skillLevel + "/" + queryData.location + "/" + queryData.subject,
       type: "GET",
     }).then(function (dbTutorData) {
-      //refreshTutorList(dbTutorData);
-      //window.location.href = "/tutors/" + queryData.grade + "/" +queryData.skillLevel + "/" + queryData.location + "/" + queryData.subject;
+      window.location.href = "/tutors/" + queryData.grade + "/" +queryData.skillLevel + "/" + queryData.location + "/" + queryData.subject;
     });
   }
 };
@@ -32,7 +31,6 @@ var handleSearchSubmit = function () {
     subject: JSON.stringify(querySubjects)
   };
   console.log(queryData);
-  //window.location.href = "/tutors/" + queryData.grade + "/" +queryData.skillLevel + "/" + queryData.location + "/" + queryData.subject;
   API.getTutors(queryData);
 };
 
@@ -108,6 +106,5 @@ $('#login-form').on('submit', function (event) {
 });
 
 $searchBtn.on("click", handleSearchSubmit);
-//refreshSubjects();
 
 
