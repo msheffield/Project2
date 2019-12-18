@@ -6,19 +6,21 @@ module.exports = function(app) {
   app.post("/api/tutors", function(req, res) {
     console.log(req.body);
     //insert into tutor table
+    var newTutor = JSON.parse(req.body["data"]);
+    console.log("newTutor: " + newTutor);
     db.Tutor.create({
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      phoneNumber: req.body.phoneNumber,
-      location: req.body.location,
-      skillLevel: req.body.skillLevel,
-      description: req.body.description,
-      grade: req.body.grade,
-      photo: req.body.photo,
-      AccountId: req.body.accountId
+      firstName: newTutor.firstName,
+      lastName: newTutor.lastName,
+      phoneNumber: newTutor.phoneNumber,
+      location: newTutor.location,
+      skillLevel: newTutor.skillLevel,
+      description: newTutor.description,
+      grade: newTutor.grade,
+      photo: newTutor.photo,
+      AccountId: newTutor.accountId
     }).then(function(dbTutor) {
       //req.body.subjects is the array of the subjects
-      req.body.subjects.forEach(function(subjectItem) {
+      newTutor.subjects.forEach(function(subjectItem) {
         //find subject id
         db.Subject.findOne({
           where: {

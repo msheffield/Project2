@@ -1,86 +1,100 @@
 var db = require("../models");
 let isAuthenticated = require('../config/middleware/isAuthenticated');
 
-module.exports = function(app) {
-  app.get('/', isAuthenticated.authLogin, function(req, res) {
+module.exports = function (app) {
+  app.get('/', isAuthenticated.authLogin, function (req, res) {
     res.redirect('/index');
   })
 
-  app.get("/index", function(req, res){
-    res.render("index.handlebars");
-  });
-
-  app.post("/tutors", function (req, res) {
+  app.get("/tutors/:grade/:skillLevel/:location/:subject", function (req, res) {
     //use raw sql to join three tables
-    console.log(req.body);
-    var condition = "";
-    if (req.body.grade != 0){
-      condition += " t.grade = " + req.body.grade + " AND";
+
+    console.log(req.params.subject);
+    var hbsObject;
+    var condition = [];
+    if (req.params.grade != 0) {
+      condition.push(" t.grade = " + req.params.grade);
     }
-    if (req.body.skillLevel != 0){
-      condition += " t.skillLevel = " + req.body.skillLevel + " AND";
+    if (req.params.skillLevel != 0) {
+      condition.push(" t.skillLevel = " + req.params.skillLevel);
     }
-    if (req.body.location != 0){
-      condition += " t.location = " + req.body.location + " AND";
+    if (req.params.location != 0) {
+      condition.push(" t.location = " + req.params.location);
     }
-    if (req.body.subject !== "[]"){
-      let subjects = req.body.subject.replace("[", "(").replace("]", ")");
-      condition += " s.name IN " + subjects;
+    if (req.params.subject !== "[]") {
+      let subjects = req.params.subject.replace("[", "(").replace("]", ")");
+      condition.push(" s.name IN " + subjects);
     }
 
-    var sql = "SELECT t.id, t.firstName, t.lastName, t.grade, t.location, t.skillLevel, t.phoneNumber, t.photo, t.description, s.name";
+    console.log(condition);
+    //remote s.name to group by the result
+    var sql = "SELECT t.id, t.firstName, t.lastName, t.grade, t.location, t.skillLevel, t.phoneNumber, t.photo, t.description";
     sql += " FROM Tutors AS t";
     sql += " INNER JOIN TutorSubjects";
     sql += " ON t.id = TutorSubjects.tutorId";
     sql += " INNER JOIN Subjects AS s";
     sql += " ON TutorSubjects.subjectId = s.id";
-    sql += (condition.trim() === "")? ";" : " WHERE " + condition + ";";
+    sql += (condition.length === 0) ? "" : " WHERE " + condition.join(" AND ");
+    sql += " GROUP BY t.id;";
 
     console.log(sql);
 
-    db.sequelize.query(sql).then(function(dbTutorData){
-      //build return object array and render tutor-block.handlebars
-      var tutorsObj = {};
-      console.log(dbTutorData);
-      //aggregate data by tutor id
-    //   for (var i = 0; i < dbTutorData.length; i++){
-    //     var tutorId = dbTutorData[i].id;
-    //     if (!(tutorId in tutorsObj)){
-    //       tutorsObj[tutorId] = dbTutorData[i];
-    //       tutorsObj[tutorId].subjectName = [];
-    //     }
-    //     console.log("dbTutorData[" + i + "] = " + dbTutorData[i]);
-    //     tutorsObj[tutorId].subjectName.push(dbTutorData[i].name.toString());
-    //   }
-    //  var tutors = [];
-    // for (var prop in tutorsObj){
-    //   tutors.push(tutorsObj[prop]);
-    // }
-    // console.log(tutors);
-      res.render("index",{
-        tutors: dbTutorData
-      });
-      
+    db.sequelize.query(sql).then(function (dbResult) {
+      console.log(dbResult[0]);
+      var dbTutorData = dbResult[0];
+      var tutors = [];
+      // aggregate data by tutor id
+      for (var i = 0; i < dbTutorData.length; i++) {
+        console.log(dbTutorData[i]);
+        tutors.push({
+          photo: dbTutorData[i].photo,
+          lastName: dbTutorData[i].lastName,
+          firstName: dbTutorData[i].firstName,
+          description: dbTutorData[i].description,
+          skillLevel: dbTutorData[i].skillLevel,
+          phoneNumber: dbTutorData[i].phoneNumber,
+          location: dbTutorData[i].location
+        });
+      }
+      console.log(tutors);
+      res.render("tutor", {tutors: tutors});
     });
+
   });
 
-  app.get("/index", function(req, res) {
+  app.get("/index", function (req, res) {
     if (req.session.user || req.user) {
-      res.redirect('/index');
+      db.Subject.findAll({}).then(function(data){
+        let renderObj = {
+          subjects: data
+        };
+        res.render("partials/searchtutor", renderObj);
+      });
     } else {
       res.redirect("login");
     }
   });
 
-  app.get("/signup", function(req, res) {
+  // Load create tutor page
+  app.get("/create-tutor", function (req, res) {
+    console.log("getting all subjects");
+    db.Subject.findAll({}).then(function (data) {
+      let renderObj = {
+        subjects: data
+      };
+      res.render("createTutor", renderObj);
+    });
+  });
+
+  app.get("/signup", function (req, res) {
     if (req.session.user || req.user) {
-      res.redirect('/');
+      res.redirect('/index');
     } else {
       res.render("signup");
     }
   });
 
-  app.get("/login", function(req, res) {
+  app.get("/login", function (req, res) {
     if (req.session.user || req.user) {
       res.redirect('/');
     } else {
