@@ -30,7 +30,7 @@ $("#create-tutor-submit").on('click', function (event) {
         type: "POST",
         data: {"data":JSON.stringify(userTutorData)}
     }).then(function (data) {
-        window.location.replace(data);
+        window.location.href = "/index";
     }).catch(function (error) {
         console.log(error);
     });
