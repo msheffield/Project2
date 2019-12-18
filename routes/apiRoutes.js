@@ -4,6 +4,7 @@ var md5 = require("blueimp-md5");
 
 module.exports = function(app) {
   app.post("/api/tutors", function(req, res) {
+    console.log(JSON.stringify(req.session));
     console.log(req.body);
     //insert into tutor table
     var newTutor = JSON.parse(req.body["data"]);
@@ -17,7 +18,7 @@ module.exports = function(app) {
       description: newTutor.description,
       grade: newTutor.grade,
       photo: newTutor.photo,
-      AccountId: newTutor.accountId
+      AccountId: req.session.user.id
     }).then(function(dbTutor) {
       //req.body.subjects is the array of the subjects
       newTutor.subjects.forEach(function(subjectItem) {

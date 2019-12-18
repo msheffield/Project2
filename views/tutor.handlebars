@@ -1,15 +1,17 @@
 <div class="container">
-  <ul>
+  <a href="/index">Back to search</a>
+  <ul class="list-group">
     {{#each tutors}}
-    <li>
+    <li class="list-group-item">
       <div class="card">
-        <img class="card-img-top" src={{photo}} alt="Card image cap">
+        <img class="card-img-top img-thumbnail" src={{photo}}>
         <div class="card-body">
           <h5 class="card-title">{{firstName}} {{lastName}}</h5>
           <div class="card-text">
             <p>{{description}}</p>
             <ul>
               <li>Skill Level: {{skillLevel}}</li>
+              <li>Grade: {{grade}}</li>
               <li>Phone: {{phoneNumber}}</li>
               <li>location: {{location}}</li>
             </ul>
