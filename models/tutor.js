@@ -43,7 +43,7 @@ module.exports = function(sequelize, DataTypes) {
         max: 5
       }
     },
-    photo: DataTypes.STRING
+    photo: DataTypes.TEXT
   });
   Tutor.associate = function(models) {
     Tutor.belongsTo(models.Account);

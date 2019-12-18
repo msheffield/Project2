@@ -53,9 +53,13 @@ db.sequelize.sync(syncOptions).then(function () {
   //////To modify - temp code to insert default subject values
   if (syncOptions.force) {
     db.Subject.bulkCreate([
-      { name: "math" },
-      { name: "reading" },
-      { name: "writing" }
+      { name: "Math" },
+      { name: "English Reading" },
+      { name: "English Writing" },
+      { name: "Science"},
+      { name: "ESL"},
+      { name: "FSL"},
+      { name: "Spanish"},
     ]).then(function () {
       console.log(db.Subject.findAll());
     });

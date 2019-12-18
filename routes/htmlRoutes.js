@@ -8,9 +8,6 @@ module.exports = function (app) {
 
   app.get("/tutors/:grade/:skillLevel/:location/:subject", function (req, res) {
     //use raw sql to join three tables
-
-    console.log(req.params.subject);
-    var hbsObject;
     var condition = [];
     if (req.params.grade != 0) {
       condition.push(" t.grade = " + req.params.grade);
