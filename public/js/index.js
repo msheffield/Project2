@@ -81,6 +81,12 @@ $('#signup-form').on('submit', function (event) {
   $.ajax('/api/signup', {
     type: 'POST',
     data: userData
+  }).then(function() {
+    if (userData.role === "2") {
+      window.location.href = '/create-tutor';
+    } else {
+      window.location.href = '/index';
+    }
   }).catch(function (error) {
     console.log(error);
   });
