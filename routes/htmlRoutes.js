@@ -6,15 +6,7 @@ module.exports = function (app) {
     res.redirect('/index');
   })
 
-<<<<<<< HEAD
   app.get("/tutors/:grade/:skillLevel/:location/:subject", function (req, res) {
-=======
-  app.get("/index", function(req, res){
-    res.render("index");
-  });
-
-  app.post("/tutors", function (req, res) {
->>>>>>> c12741643c24091f1eee57111a424a26d1f48f2b
     //use raw sql to join three tables
     var condition = [];
     if (req.params.grade != 0) {
