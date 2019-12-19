@@ -81,7 +81,7 @@ module.exports = function(app) {
   });
 
   // Login/signup routes
-  app.post('/api/login', passport.authenticate('local', {successRedirect: '/index', failureRedirect: 'login'}));
+  app.post('/api/login', passport.authenticate('local', {successRedirect: '/index', failureRedirect: '/login'}));
 
   app.post('/api/signup', function(req, res) {
     let data = {

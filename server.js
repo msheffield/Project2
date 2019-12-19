@@ -40,7 +40,7 @@ require('./config/passport');
 require("./routes/htmlRoutes")(app);
 require("./routes/apiRoutes")(app);
 
-var syncOptions = { force: true };
+var syncOptions = { force: false };
 
 // If running a test, set syncOptions.force to true
 // clearing the `testdb`
