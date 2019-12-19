@@ -3,12 +3,12 @@ var $searchBtn = $("#searchButton");
 
 var API = {
   getTutors: function (queryData) {
+    console.log("getTutors queryData.subject: " + queryData.subject);
     $.ajax({
-      url: "/tutors",
-      type: "POST",
-      data: queryData
-    }).then(function () {
-      location.reload();
+      url: "/tutors/" + queryData.grade + "/" +queryData.skillLevel + "/" + queryData.location + "/" + queryData.subject,
+      type: "GET",
+    }).then(function (dbTutorData) {
+      window.location.href = "/tutors/" + queryData.grade + "/" +queryData.skillLevel + "/" + queryData.location + "/" + queryData.subject;
     });
   }
 };
@@ -16,14 +16,14 @@ var API = {
 var handleSearchSubmit = function () {
   event.preventDefault();
   var querySubjects = [];
-  var checkedElements = $(".custom-control-input:checked");
-  for(var i = 0; i < checkedElements.length; i++)
-  {
+  var checkedElements = $(".subject-dropdown-item:checked");
+  for (var i = 0; i < checkedElements.length; i++) {
     console.log(checkedElements[i]);
     console.log($(checkedElements[i]).val());
     querySubjects.push($(checkedElements[i]).val());
   }
-  
+
+  console.log("querySubjects = " + querySubjects);
   var queryData = {
     grade: $("#gradeDropdown").val(),
     skillLevel: $("#skillsDropdown").val(),
@@ -35,28 +35,39 @@ var handleSearchSubmit = function () {
 };
 
 //refresh subject dropdown items
-var refreshSubjects = function () {
-  $("#subjectDropdown").empty();
-  $.get("/api/subjects").then(function (data) {
-    console.log(data);
-    for (var i = 0; i < data.length; i++) {
-      var newDropdownItem = $("<a>").addClass("dropdown-item");
-      var newDiv = $("<div>").addClass("custom-control custom-checkbox");
-      var newInput = $("<input>").addClass("custom-control-input");
-      newInput.attr("type", "checkbox");
-      newInput.attr("value", data[i].name);
-      newInput.attr("id", data[i].name);
-      var newLabel = $("<label>").addClass("custom-control-label");
-      newLabel.attr("for", data[i].name);
-      newLabel.text(data[i].name);
-      newDiv.append(newInput);
-      newDiv.append(newLabel);
-      newDropdownItem.append(newDiv);
-      $("#subjectDropdown").append(newDropdownItem);
-    }
-  });
-};
+// var refreshSubjects = function () {
+//   $("#subjectDropdown").empty();
+//   $.get("/api/subjects").then(function (data) {
+//     console.log(data);
+    
+//     for (var i = 0; i < data.length; i++) {
+//       var newDropdownItem = $("<a>").addClass("dropdown-item");
+//       var newDiv = $("<div>").addClass("custom-control custom-checkbox");
+//       var newInput = $("<input>").addClass("custom-control-input");
+//       newInput.attr("type", "checkbox");
+//       newInput.attr("value", data[i].name);
+//       newInput.attr("id", data[i].name);
+//       var newLabel = $("<label>").addClass("custom-control-label");
+//       newLabel.attr("for", data[i].name);
+//       newLabel.text(data[i].name);
+//       newDiv.append(newInput);
+//       newDiv.append(newLabel);
+//       newDropdownItem.append(newDiv);
+//       $("#subjectDropdown").append(newDropdownItem);
+//     }
+//   });
+// };
 
+var refreshTutorList = function (dbTutorData) {
+  console.log(dbTutorData);
+  $("#list-tutors").empty();
+  for (var i = 0; i < dbTutorData.length; i++) {
+    var displayText = dbTutorData[i].firstName + " " + dbTutorData[i].lastName + " " + dbTutorData[i].location + " ";
+    var listItem = $("<li>").addClass("list-group-item");
+    listItem.text(displayText);
+    $("#list-tutors").append(listItem);
+  }
+}
 // Sign-Up/Login
 
 $('#signup-form').on('submit', function (event) {
@@ -70,13 +81,7 @@ $('#signup-form').on('submit', function (event) {
   $.ajax('/api/signup', {
     type: 'POST',
     data: userData
-  }).then(function(data) {
-    if (userData.role === '2') {
-      window.location.href = '/create-tutor';
-    } else {
-      window.location.href = '/index';
-    }
-  }).catch(function(error) {
+  }).catch(function (error) {
     console.log(error);
   });
 });
@@ -92,11 +97,14 @@ $('#login-form').on('submit', function (event) {
   $.ajax('/api/login', {
     type: 'POST',
     data: userData
-  }).then(function(data) {
+  }).then(function (data) {
+
     window.location.href = '/index';
-  }).catch(function(error) {
+  }).catch(function (error) {
     console.log(error)
   });
 });
+
+$searchBtn.on("click", handleSearchSubmit);
 
 
