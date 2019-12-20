@@ -1,5 +1,59 @@
+<div class="container">
+      <div class="jumbotron" id="tutorBlock">
+        <h1 class="“text-center”">
+          <span class="“fas" fa-book-reader”></span> Tutor Finder
+        </h1>
+        <hr class="new1" />
+        <h2 class="“text-center”">Find a perfect Tutor for your need!</h2>
+        <br />
 
-    <li>
+        <div class="container">
+          <a href="/index">Back to search</a>
+          <ul class="list-group">
+            {{#each tutors}}
+            <li class="list-group-item">
+              <div class="card">
+                <img class="card-img-top img-thumbnail" src="{{photo}}" />
+                <div class="card-body">
+                  <h5 class="card-title">{{firstName}} {{lastName}}</h5>
+                  <div class="card-text">
+                    <p>{{description}}</p>
+                    <ul>
+                      <li>Skill Level: {{skillLevel}}</li>
+                      <li>Grade: {{grade}}</li>
+                      <li>Phone: {{phoneNumber}}</li>
+                      <li>location: {{location}}</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </li>
+            {{/each}}
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    {{!-- <li>
         <div class="card">
             <img class="card-img-top" src={{photo}} alt="Card image cap">
             <div class="card-body">
@@ -14,4 +68,4 @@
                 </div>
             </div>
         </div>
-    </li>
+    </li> --}}
