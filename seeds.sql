@@ -1,3 +1,12 @@
+-- Subjects data
+INSERT INTO Subjects(name, createdAt, updatedAt) VALUES("Math", now(), now());
+INSERT INTO Subjects(name, createdAt, updatedAt) VALUES("English Reading", now(), now());
+INSERT INTO Subjects(name, createdAt, updatedAt) VALUES("English Writing", now(), now());
+INSERT INTO Subjects(name, createdAt, updatedAt) VALUES("Science", now(), now());
+INSERT INTO Subjects(name, createdAt, updatedAt) VALUES("ESL", now(), now());
+INSERT INTO Subjects(name, createdAt, updatedAt) VALUES("FSL", now(), now());
+INSERT INTO Subjects(name, createdAt, updatedAt) VALUES("Spanish", now(), now());
+
 -- Account data
 INSERT INTO Accounts(role, username,password,email,createdAt,updatedAt) 
 VALUES(1, "jane123", "1234567890", "jane@gmail.com", now(), now());
