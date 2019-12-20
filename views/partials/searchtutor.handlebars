@@ -1,95 +1,89 @@
 <div class="container">
 
   <div class="jumbotron">
-    <h1 class="text-center"><span class="fas fa-book-reader"></span> Tutor Finder</h1>
-    <hr>
-    <h2 class="text-center">Find a perfect Tutor for your need!</h2>
+    <h1 class=“text-center”><span class=“fas fa-book-reader”></span> Tutor Finder</h1>
+    <hr class="new1">
+    <h2 class=“text-center”>Find a perfect Tutor for your need!</h2>
     <br>
-
-    <div class="text-center">
-
-
-    </div>
-
 
 
     <!--form class="form-inline justify-content-center text-center"-->
-      <div class="form-row align-items-center">
+    <div class="form-row align-items-center">
 
-        <div class="col-auto my-1">
-
-
-
-          <button class="btn btn-primary dropdown-toggle mr-4" type="button" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false" id="btn-subject">Subject</button>
-          <div class="dropdown-menu" id="subjectDropdown">
-            {{#each subjects}}
-            {{> subject-dropdownitem}}
-            {{/each}}
-          </div>
-        </div>
+      <div class="col-auto my-1">
 
 
 
-
-        <div class="col-auto my-1">
-          <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
-          <select class="custom-select mr-sm-2" id="gradeDropdown">
-            <option value="0">Grade</option>
-            <option value="1">College</option>
-            <option value="2">High School</option>
-            <option value="3">Middle School</option>
-            <option value="4">Elementary School</option>
-          </select>
-        </div>
-
-
-        <br>
-
-        <div class="col-auto my-1 align-items-center">
-          <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
-          <select class="custom-select mr-sm-2" id="skillsDropdown">
-            <option type="checkbox" value="0">Skill Level</option>
-              <option value="1">1 - Struggling Students</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-              <option value="10">10 - Above and Beyond Students</option>
-          </select>
-        </div>
-
-        <br>
-
-        <div class="col-auto my-1">
-          <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
-          <select class="custom-select mr-sm-2" id="locationDropdown">
-            <option value="0">Location</option>
-            <option value="Seattle">Seattle</option>
-            <option value="Bellevue">Bellevue</option>
-            <option value="Kirkland">Kirkland</option>
-            <option value="Renton">Renton</option>
-            <option value="Federal Way">Federal Way</option>
-          </select>
-        </div>
-
-        <br>
-
-        <div class="col-auto my-1">
-          <div class="custom-control custom-checkbox mr-sm-2">
-            <input type="checkbox" class="custom-control-input" id="customControlAutosizing">
-            <label class="custom-control-label" for="customControlAutosizing">Remember my preference</label>
-          </div>
-        </div>
-
-        <div class="col-auto my-1">
-          <button id="searchButton" type="search" class="btn btn-primary">Search</button>
+        <button class="btn btn-primary dropdown-toggle mr-4" type="button" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false" id="btn-subject">Subject</button>
+        <div class="dropdown-menu" id="subjectDropdown">
+          {{#each subjects}}
+          {{> subject-dropdownitem}}
+          {{/each}}
         </div>
       </div>
+
+
+
+
+      <div class="col-auto my-1">
+        <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
+        <select class="custom-select mr-sm-2" id="gradeDropdown">
+          <option value="0">Grade</option>
+          <option value="1">College</option>
+          <option value="2">High School</option>
+          <option value="3">Middle School</option>
+          <option value="4">Elementary School</option>
+        </select>
+      </div>
+
+
+      <br>
+
+      <div class="col-auto my-1 align-items-center">
+        <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
+        <select class="custom-select mr-sm-2" id="skillsDropdown">
+          <option type="checkbox" value="0">Skill Level</option>
+          <option value="1">1 - Beginner</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10 - Master</option>
+        </select>
+      </div>
+
+      <br>
+
+      <div class="col-auto my-1">
+        <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
+        <select class="custom-select mr-sm-2" id="locationDropdown">
+          <option value="0">Location</option>
+          <option value="Seattle">Seattle</option>
+          <option value="Bellevue">Bellevue</option>
+          <option value="Kirkland">Kirkland</option>
+          <option value="Renton">Renton</option>
+          <option value="Federal Way">Federal Way</option>
+        </select>
+      </div>
+
+      <br>
+
+      <div class="col-auto my-1">
+        <div class="custom-control custom-checkbox mr-sm-4">
+          <input type="checkbox" class="custom-control-input" id="customControlAutosizing">
+          <label class="custom-control-label" for="customControlAutosizing">Remember my preference</label>
+        </div>
+      </div>
+
+      <div class="col-auto my-1">
+        <button id="searchButton" type="search" class="btn btn-primary">Search</button>
+      </div>
+    </div>
     <!--/form-->
 
   </div>

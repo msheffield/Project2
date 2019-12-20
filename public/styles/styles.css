@@ -41,3 +41,13 @@
   width: 200px;
   height: auto;
 }
+
+hr.new1 {
+  border: 1px solid white;
+}
+
+#loginContainer {
+
+  margin-top: -40px;
+
+}
